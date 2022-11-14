@@ -1,0 +1,5 @@
+url: https://elianhugh.github.io/rsx/
+template:
+  bootstrap: 5
+  params:
+      bootswatch: flatly

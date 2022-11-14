@@ -1,0 +1,11 @@
+{
+  "declaration": true,
+  "compilerOptions": {
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "declaration": true,
+    "declarationDir": "./srcts/types/*",
+    "emitDeclarationOnly": true,
+    "strict": true
+  }
+}
