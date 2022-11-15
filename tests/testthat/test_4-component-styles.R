@@ -23,6 +23,24 @@ test_that("styles validation", {
     )
 })
 
+test_that("scoped styles", {
+    x <- component(
+        styles = list(
+            scoped = ""
+        )
+    )
+
+    expect_no_error(print(x()))
+
+    x <- component(
+        styles = list(
+            scoped = "* { color: red }"
+        )
+    )
+
+    expect_no_error(print(x()))
+})
+
 # test_that("styles should be overwritten with same-named components", {
 #     suppressMessages({
 #         reset_rsx_env()
