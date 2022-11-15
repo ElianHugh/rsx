@@ -36,7 +36,7 @@ template_tag <- function(instance_object, template, contents, .noWS = NULL) {
 
             # return element children as the node is
             # wrapped in a template node
-            unwrap_tags(element$allTags())
+            unwrap_tags(element)
         },
         instance_object$methods[["render"]] %||% NULL,
         function(element) {
@@ -80,11 +80,11 @@ manage_scoping <- function(element, instance_object) {
     if (length(instance_object$component$styles$scoped) > 0L) {
         args <- alist("")
         names(args) <- paste0("data-rsx-", instance_object$component$component_id)
-        unwrap_tags(htmltools::tagQuery(wrap_tags(element))$
+        htmltools::tagQuery(wrap_tags(element))$
             each(function(x, i) add_scoping(x, i, args))$
             find("*")$
             each(function(x, i) add_scoping(x, i, args))$
-            allTags())
+            allTags()
     } else {
         element
     }
@@ -105,7 +105,7 @@ manage_slots <- function(element, children, instance_object) {
     slot_named_children(tq, children)
     slot_unnamed_children(tq, children)
     use_fallback_slots(tq)
-    unwrap_tags(tq)
+    unwrap_tags(tq$allTags())
 }
 
 slot_named_children <- function(tq, children) {
