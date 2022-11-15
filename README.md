@@ -8,7 +8,7 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 
 ## -- Work In Progress --
 
-Create complex yet manageable Shiny applications with web-application components that look like HTML tags.
+Create complex yet manageable Shiny applications with nestable components that encapsulate both UI and state. Heavily inspired by many JS frameworks, particularly vue.
 
 <b>Features</b>:
 

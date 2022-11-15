@@ -2,7 +2,7 @@
 % Please edit documentation in R/component.R
 \name{component}
 \alias{component}
-\title{rsx Component}
+\title{Create a component}
 \usage{
 component(
   name = paste0("unnamed_component-", random_id()),
@@ -24,82 +24,13 @@ component(
 \item{styles}{named list of "global" and "scoped" styles}
 }
 \description{
-rsx Component
+TODO
 }
-\details{
-\subsection{Data}{
-
-Data is used for a component's internal state and
-can also be used to pass information from a parent component to its children.
-Both component templates and methods have access to component data.
-
-The component data function must be of the following structure:\if{html}{\out{<div class="sourceCode r">}}\preformatted{function() \{
- # must either return a named list or NULL
- list()
-\}
-}\if{html}{\out{</div>}}
-
-For instance, the following is a valid data function:\if{html}{\out{<div class="sourceCode r">}}\preformatted{function() \{
- list(
-   rctv = shiny::reactiveVal(),
-   df   = mtcars
- )
-\}
-}\if{html}{\out{</div>}}
+\seealso{
+Other components: 
+\code{\link{component-data}},
+\code{\link{component-methods}},
+\code{\link{component-styles}},
+\code{\link{component-template}}
 }
-
-\subsection{Methods}{
-
-Methods are a list of functions that are contained within a given component, and
-typically will do work with component data.
-
-The \code{setup} method is special and is treated as the equivalent of a
-module server for the component.
-
-The \code{render} method is special and is called when the UI of a component is rendered.
-
-The following is an excerpt from a simple counter component:\if{html}{\out{<div class="sourceCode r">}}\preformatted{methods = list(
-    setup = function(input, output, session) \{
-        output$txt <- renderText(\{
-            paste0("Count is: ", self$count())
-        \})
-        observeEvent(input$button, \{
-            self$count(self$count() + 1L)
-        \})
-    \},
-    increment = function() \{
-        self$count(self$count() + 1L)
-    \}
-)
-}\if{html}{\out{</div>}}
-}
-
-\subsection{Template}{
-
-The template refers to the UI-generator of a given component. This is analagous
-to the UI function of a given {shiny} module.
-
-Template requires one argument: \code{ns}. \code{ns} is used the same as in shiny modules, and is used to distinguish between
-component instances. The user does not need to supply their own \code{shiny::NS}
-call -- this is handled by {rsx}.
-
-The component template function must be of the following structure:\if{html}{\out{<div class="sourceCode r">}}\preformatted{function(ns) \{
- # must either return an object that can be coerced to a `shiny::tags` object or a `shiny::tagList`
-\}
-}\if{html}{\out{</div>}}
-
-The following is a valid template:\if{html}{\out{<div class="sourceCode r">}}\preformatted{function(ns) \{
- shiny::div("Hello world!")
-\}
-}\if{html}{\out{</div>}}
-}
-
-\subsection{Styles}{
-
-The styles argument is a named list of scoped and global CSS styles.\if{html}{\out{<div class="sourceCode r">}}\preformatted{list(
- scoped = "",
- global = ""
-)
-}\if{html}{\out{</div>}}
-}
-}
+\concept{components}
