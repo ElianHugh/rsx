@@ -24,6 +24,8 @@ test_that("styles validation", {
 })
 
 test_that("scoped styles", {
+    reset_rsx_env()
+
     x <- component(
         styles = list(
             scoped = ""
@@ -32,13 +34,22 @@ test_that("scoped styles", {
 
     expect_no_error(print(x()))
 
+    reset_rsx_env()
+
     x <- component(
+        name = "test",
+        template = function(ns) {
+            shiny::div()
+        },
         styles = list(
             scoped = "* { color: red }"
         )
     )
 
-    expect_no_error(print(x()))
+    expect_identical(
+        get_tag_output(x()),
+        get_tag_output(shiny::div("data-rsx-test" = ""))
+    )
 })
 
 # test_that("styles should be overwritten with same-named components", {
