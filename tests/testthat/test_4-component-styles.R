@@ -48,7 +48,12 @@ test_that("scoped styles", {
 
     expect_identical(
         get_tag_output(x()),
-        get_tag_output(shiny::div("data-rsx-test" = ""))
+        sprintf('<div data-rsx-%s=""></div>', attr(x, "component_id"))
+    )
+
+    expect_identical(
+        aggregate_styles(),
+        sprintf('*[data-rsx-%s=\"\"] { color: red }', attr(x, "component_id"))
     )
 })
 
