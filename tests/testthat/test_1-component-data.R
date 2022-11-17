@@ -27,4 +27,3 @@ test_that("data validation", {
         )()
     )
 })
-

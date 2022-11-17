@@ -51,7 +51,7 @@ compile_styles <- function(static_path = NULL) {
     if (is.null(static_path)) {
         res
     } else {
-        path <- file.path(c(static_path, "rsx.min.css"))
+        path <- file.path(static_path, "rsx.min.css")
         message(paste0("  - CSS compiled to: ", path))
         con <- file(path)
         writeLines(res, con)

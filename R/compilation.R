@@ -78,10 +78,8 @@ rsx_ui <- function(
                 htmltools::tags$link(
                     rel = "stylesheet",
                     href = file.path(
-                        c(
-                            resource_path,
-                            "rsx.min.css"
-                        )
+                        resource_path,
+                        "rsx.min.css"
                     ),
                     type = "text/css"
                 )

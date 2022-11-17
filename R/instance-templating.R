@@ -32,10 +32,12 @@ template_tag <- function(instance_object, template, contents, .noWS = NULL) {
                 ns = set_namespace(instance_object$instance_id)
             )
             element <- manage_slots(element, children, instance_object)
-            element <- manage_scoping(element, instance_object)
-
             # return element children as the node is
             # wrapped in a template node
+            unwrap_tags(element)
+        },
+        function(element) {
+            element <- manage_scoping(element, instance_object)
             unwrap_tags(element)
         },
         instance_object$methods[["render"]] %||% NULL,
@@ -105,7 +107,6 @@ manage_slots <- function(element, children, instance_object) {
     slot_named_children(tq, children)
     slot_unnamed_children(tq, children)
     use_fallback_slots(tq)
-    unwrap_tags(tq$allTags())
 }
 
 slot_named_children <- function(tq, children) {
@@ -202,7 +203,7 @@ wrap_tags <- function(x) {
 
 unwrap_tags <- function(x) {
     if (inherits(x, "shiny.tag.query")) {
-        tagq <- x$allTags()
+        x <- x$allTags()
     }
     if (inherits(x, "shiny.tag") && identical(x$name, "template")) {
         x$children
