@@ -127,3 +127,47 @@ test_that("slotting", {
         )
     )
 })
+
+test_that("nesting", {
+    reset_rsx_env()
+    x <- component(
+        template = function(ns) {
+            shiny::div(
+                shiny::tags$slot()
+            )
+        }
+    )
+
+    ## https://github.com/ElianHugh/rsx/issues/6
+    # 2 layer
+    expect_identical(
+        get_tag_output(
+            x(
+                x()
+            )
+        ),
+        get_tag_output(
+            shiny::div(
+                shiny::div()
+            )
+        )
+    )
+
+    # 3 layer
+    expect_identical(
+        get_tag_output(
+            x(
+                x(
+                    x()
+                )
+            )
+        ),
+        get_tag_output(
+            shiny::div(
+                shiny::div(
+                    shiny::div()
+                )
+            )
+        )
+    )
+})
