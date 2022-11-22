@@ -103,60 +103,56 @@ add_scoping <- function(tag, i, args) {
 }
 
 manage_slots <- function(element, children, instance_object) {
-    tq <- htmltools::tagQuery(wrap_tags(element))
-    slot_named_children(tq, children)
-    slot_unnamed_children(tq, children)
-    use_fallback_slots(tq)
-}
+    template_query <- htmltools::tagQuery(
+        wrap_tags(element)
+    )
 
-slot_named_children <- function(tq, children) {
-    tq$
-        find("slot")$
+    child_query <- htmltools::tagQuery(
+        wrap_tags(children)
+    )
+
+    # unnamed children
+    unnamed_query <- child_query$
+        children("*")$
+        filter(function(x, i) {
+        is.null(x[["attribs"]][["slot"]])
+    })
+
+    unnamed_tags <- unnamed_query$selectedTags()
+    unnamed_query$remove()
+    template_query$find("slot")$
         filter(
         function(x, i) {
-            !is.null(x$attribs[["name"]])
-        })$
-        each(
-        function(x, i) {
-            name <- x$attribs$name
-            possible_child <- get_named_slotted_children(children)$filter(
-                function(child, i) {
-                    identical(child$attribs$slot, x$attribs$name)
-                }
-            )
-            if (possible_child$length() > 0L) {
-                child <- htmltools::as.tags(possible_child$selectedTags())[[1L]]
-                child$attribs$slot <- NULL
-                x$name <- child$name
-                x$children <- child$children
-                x$attribs <- child$attribs
-            }
-            x
+            is.null(x$attribs[["name"]])
         }
-    )$resetSelected()
-}
+    )$replaceWith(unnamed_tags)$
+        resetSelected()
 
-slot_unnamed_children <- function(tq, children) {
-    # todo
-    # only allow 1 default slot
-    unnamed_children <- get_unnamed_slotted_children(children)
-    if (unnamed_children$length() > 0L) {
-        child <- htmltools::as.tags(unnamed_children$selectedTags())
-        tq$
-            find("slot")$
+    named_query <- child_query$
+        children("*")$
+        filter(function(x, i) {
+        !is.null(x[["attribs"]][["slot"]])
+    })
+
+    named_tags <- named_query$selectedTags()
+    named_query$remove()
+
+    # named children
+    for (child in named_tags) {
+        insert_child <- child
+        insert_child$attribs$slot <- NULL
+        template_query$find("slot")$
             filter(
             function(x, i) {
-                is.null(x$attribs[["name"]])
+                identical(child$attribs$slot, x$attribs$name)
             }
-        )$replaceWith(child)$resetSelected()
+        )$replaceWith(insert_child)$resetSelected()
     }
-}
 
-use_fallback_slots <- function(tq) {
-   tq$
-       find("slot")$
-       each(function(x, i) {
-       if (length(x$children) > 0L) {
+    template_query$
+        find("slot")$
+        each(function(x, i) {
+        if (length(x$children) > 0L) {
             get_index <- function(parent) {
                 which(as.logical(lapply(parent$children, function(child) {
                     identical(child$envKey, x$envKey)
@@ -168,20 +164,20 @@ use_fallback_slots <- function(tq) {
                 x$children,
                 index
             )
-       }
-       x
-   })$resetSelected()$
-       find("slot")$
-       remove()
+        }
+        x
+    })$resetSelected()$
+        find("slot")$
+        remove()
+
+
+    unwrap_tags(
+        template_query
+    )
 }
 
-get_named_slotted_children <- function(children) {
-    taglist <- wrap_tags(children)
-    htmltools::tagQuery(taglist)$
-        find("*")$
-        filter(function(x, i) {
-        !is.null(x[["attribs"]][["slot"]])
-    })
+slottify <- function(element, children) {
+
 }
 
 get_unnamed_slotted_children <- function(children) {

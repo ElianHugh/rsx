@@ -1,5 +1,5 @@
-library(shiny)
 library(rsx)
+library(shiny)
 
 data_table <- component(
     name = "data_table",
