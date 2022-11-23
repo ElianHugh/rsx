@@ -4,10 +4,10 @@
 \alias{rsx_ui}
 \title{Create an rsx UI taglist}
 \usage{
-rsx_ui(entry, id = NULL, app_class = "App", resource_path = NULL)
+rsx_ui(root, id = NULL, app_class = "App", resource_path = NULL)
 }
 \arguments{
-\item{entry}{a component used as the top-level node for the shiny app}
+\item{root}{a component used as the top-level node for the shiny app}
 
 \item{id}{TODO}
 
