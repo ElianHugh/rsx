@@ -60,11 +60,14 @@ test_that(
         reset_rsx_env()
         suppressMessages({
             x <- component(name = "component_overwrite")
-            expect_true(length(get_components()) == 1L)
+            x()
+            expect_true(length(instances_to_component_list()) == 1L)
             x <- component(name = "component_overwrite")
-            expect_true(length(get_components()) == 1L)
+            x()
+            expect_true(length(instances_to_component_list()) == 1L)
             y <- component(name = "component_overwrite2")
-            expect_true(length(get_components()) == 2L)
+            y()
+            expect_true(length(instances_to_component_list()) == 2L)
         })
     }
 )

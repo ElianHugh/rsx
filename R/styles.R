@@ -63,9 +63,9 @@ compile_styles <- function(static_path = NULL) {
 
 aggregate_styles <- function() {
     css <- list()
-
-    for (id in names(rsx_env$components)) {
-        comp <- rsx_env$components[[id]]
+    components <- instances_to_component_list()
+    for (id in names(components)) {
+        comp <- components[[id]]
         if (!is.null(comp$styles$scoped)) {
             css <- append(css, comp$styles$scoped)
         }
