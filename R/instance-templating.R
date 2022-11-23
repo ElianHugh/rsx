@@ -176,19 +176,6 @@ manage_slots <- function(element, children, instance_object) {
     )
 }
 
-slottify <- function(element, children) {
-
-}
-
-get_unnamed_slotted_children <- function(children) {
-    taglist <- wrap_tags(children)
-    htmltools::tagQuery(taglist)$
-        find("*")$
-        filter(function(x, i) {
-        is.null(x[["attribs"]][["slot"]])
-    })
-}
-
 wrap_tags <- function(x) {
     if (!inherits(x, "shiny.tag") || !identical(x$name, "template")) {
         shiny::tags$template(x)

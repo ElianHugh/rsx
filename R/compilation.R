@@ -19,11 +19,13 @@ rsx_app <- function(root, ..., resource_path = NULL, app_class = "App") {
     stopifnot(is.character(resource_path) || is.null(resource_path))
     stopifnot(is.character(app_class))
 
-    if (!is.null(resource_path)) {
-        static_path <- compile_styles(resource_path)
-    }
 
     if (inherits(root, "component")) {
+        root <- root()
+
+        if (!is.null(resource_path)) {
+            static_path <- compile_styles(resource_path)
+        }
         shiny::shinyApp(
             ui = rsx_ui(
                 root,
@@ -45,7 +47,7 @@ rsx_app <- function(root, ..., resource_path = NULL, app_class = "App") {
 #' @description
 #' `rsx_ui` is a low-level function for creating rsx ui without the use of `rsx_app`.
 #'
-#' @param entry a component used as the top-level node for the shiny app
+#' @param root a component used as the top-level node for the shiny app
 #' @param id TODO
 #' @param resource_path
 #' path to a resource folder, if `NULL` styles will be inlined
@@ -56,7 +58,7 @@ rsx_app <- function(root, ..., resource_path = NULL, app_class = "App") {
 #' @family compilation
 #' @export
 rsx_ui <- function(
-    entry,
+    root,
     id = NULL,
     app_class = "App",
     resource_path = NULL
@@ -91,7 +93,7 @@ rsx_ui <- function(
         htmltools::tags$body(
             htmltools::div(
                 class = app_class,
-                entry()
+                root
             )
         )
     )

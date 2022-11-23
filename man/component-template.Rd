@@ -60,7 +60,6 @@ slot isn't filled -- this is typically called "fallback" content.
 )
 
 print(x())
-#> <p>Hello!</p>
 }\if{html}{\out{</div>}}
 \subsection{Named Slots}{
 

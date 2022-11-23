@@ -9,8 +9,12 @@
 #' @export
 decompose <- function(x) {
     inst <- attributes(x)[["instance"]]
-    list(
-        server = inst[["methods"]][["setup"]] %||% NULL,
-        ui = x
-    )
+    if (is.null(inst)) {
+        stop("Cannot decompose object. Shiny tag is not a component instance.")
+    } else {
+        list(
+            server = inst[["methods"]][["setup"]] %||% NULL,
+            ui = x
+        )
+    }
 }

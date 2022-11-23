@@ -34,7 +34,7 @@ component <- function(name = paste0("unnamed_component-", random_id()),
 
 new_component <- function(name, data, methods, template, styles, parent) {
     component_id <- paste0(name, random_id())
-    new <- structure(
+    structure(
         function(...) {
             instantiate(sys.function())(...)
         },
@@ -47,8 +47,6 @@ new_component <- function(name, data, methods, template, styles, parent) {
         styles       = create_styles_property(styles, component_id),
         .parent      = parent
     )
-
-    register_component(name, new)
 }
 
 validate_component <- function(self) { #nolint
