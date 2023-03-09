@@ -16,6 +16,10 @@ Create complex yet manageable Shiny applications with nestable components that e
 * Nestable and modular templating system
 * Scoped CSS to isolate styles between components
 
+## Why rsx?
+
+When writing Shiny apps, I often found that I was getting confused when juggling modules. Specifically, I found having to remember the relationship between module server and module UI frustrating -- if my the UI for "module A" *always* links to the server for "module A", why do I have to keep track of two objects? {rsx} seeks to resolve this cognitive overhead by ensuring that module A UI and server are *always* coupled.
+
 ## Installation
 
 ### Release build

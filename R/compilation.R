@@ -23,7 +23,10 @@ rsx_app <- function(root, ..., resource_path = NULL, app_class = "App") {
     if (inherits(root, "component")) {
         root <- root()
 
-        if (!is.null(resource_path)) {
+        if (
+            !is.null(resource_path) &&
+            requireNamespace("V8", quietly = TRUE)
+        ) {
             static_path <- compile_styles(resource_path)
         }
         shiny::shinyApp(
