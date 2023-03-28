@@ -8,7 +8,7 @@
 #' @param data  function that returns a named list
 #' @param methods named list of functions
 #' @param template function that returns a taglist
-#' @param styles named list of "global" and "scoped" styles
+#' @param styles character vector of length 1
 #'
 #' @family components
 #' @export
@@ -94,11 +94,8 @@ validate_component <- function(self) { #nolint
     }
 
     if (!is.null(self$styles)) {
-        if (!is.list(self$styles)) {
-            return("- $styles must be a list")
-        }
-        if (length(names(self$styles)) > 2L || any(names(self$styles) %nin% c("scoped", "global"))) {
-            return("- $styles only supports the names `scoped` and `global`")
+        if (!is.character(self$styles)) {
+            return("- $styles must be a character vector of length 1")
         }
     }
 
@@ -124,22 +121,13 @@ create_template_property <- function(template) {
 
 create_styles_property <- function(styles, hash) {
     if (!is.null(styles)) {
-        if (is.list(styles)) {
-            nms <- names(styles)
-            if ((length(nms) > 2L && all(nms %nin% c("scoped", "global")))) {
-                error_component_invalid_styles()
-            }
+        if (!is.character(styles)) {
+            error_component_invalid_styles()
         }
-
-        # TODO
-        # this should occur AFTER preprocessing
-        if (!is.null(styles$scoped)) {
-            styles$scoped <- postfix_css(
-                styles$scoped,
-                hash
-            )
-        }
-        styles
+        postfix_css(
+            styles,
+            hash
+        )
     } else {
         NULL
     }

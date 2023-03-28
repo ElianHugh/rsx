@@ -11,9 +11,9 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.1.9000
 Imports:
     htmltools,
-    shiny
+    shiny,
+    V8
 Suggests:
-    V8,
     covr,
     knitr,
     rmarkdown,
