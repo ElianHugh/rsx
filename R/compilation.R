@@ -107,14 +107,14 @@ rsx_ui <- function(
 #' Create an rsx server
 #'
 #' @description
-#' `rsx server` is a low-level function that loads up the module servers of all instantiated rsx::components.
+#' `rsx_server` is a low-level function that loads up the module servers of all instantiated rsx::components.
 #' If the `rsx_app` function is not viable for your shiny application setup, the rsx_server function
 #' can be used.
 #'
 #' @details
 #' Some things to note:
-#'     * Due to randomised hashing of component namepaces, shiny modules are not nested in rsx
-#'     * If a component does not have a setup function, a module will not be created for the instance
+#' * Due to randomised hashing of component namepaces, shiny modules are not nested in rsx
+#' * If a component does not have a setup function, a module server will not be created for the instance
 #'
 #' @return shiny server function
 #' @family compilation
@@ -135,7 +135,12 @@ rsx_server <- function() {
     }
 }
 
-#' RSX Module Server
+#' Create an rsx module server
+#'
+#' @description
+#' `rsx_module_server` is a low-level function that loads up the module servers of all instantiated components.
+#' This is similar to `rsx_server`, but also allows for namespacing
+#' the rsx server.
 #'
 #' @param id unique namespace
 #' @export

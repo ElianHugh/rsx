@@ -2,13 +2,49 @@
 #'
 #' @description
 #'
-#' TODO
+#' Components represent the encapsulation of a shiny module's
+#' logic and UI into a singular object, and can be used like
+#' any other shiny tag.
 #'
-#' @param name TODO
+#' @param name component name
 #' @param data  function that returns a named list
 #' @param methods named list of functions
 #' @param template function that returns a taglist
 #' @param styles character vector of length 1
+#'
+#' @examples
+#' library(shiny)
+#' counter <- component(
+#'     name = "counter",
+#'     data = function() {
+#'         list(
+#'             label = "Counter",
+#'             count = reactiveVal(0L)
+#'         )
+#'     },
+#'     template = function(ns) {
+#'         tagList(
+#'             actionButton(ns("button"), label = self$label),
+#'             verbatimTextOutput(ns("out"))
+#'         )
+#'     },
+#'     methods = list(
+#'         setup = function(input, output, session) {
+#'             observeEvent(input$button, {
+#'                 self$count(
+#'                     self$count() + 1L
+#'                 )
+#'             })
+#'             output$out <- renderText(
+#'                 self$count()
+#'             )
+#'         }
+#'     )
+#' )
+#' tagList(
+#'  tags$h1("Counter"),
+#'  counter()
+#' )
 #'
 #' @family components
 #' @export

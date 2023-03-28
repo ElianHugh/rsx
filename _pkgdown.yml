@@ -4,11 +4,15 @@ template:
   params:
       bootswatch: flatly
 reference:
-- title: "Core Functions"
-  desc: "Functions that are fundamental to rsx"
+- title: "Components"
+  desc: "Component infrastructure"
   contents:
   - component
   - rsx_app
+  - component-data
+  - component-template
+  - component-methods
+  - component-styles
 - title: "Misc"
   desc: "Functions for misc. purposes"
   contents:

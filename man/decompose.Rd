@@ -14,5 +14,21 @@ list
 }
 \description{
 Given a component instance tag \code{x}, decompose the instance
-into separate server and UI elements
+into separate server and UI elements.
+}
+\examples{
+comp <- component(
+   name = "decompose",
+   template = function(ns) {
+       shiny::div("hello world")
+   },
+   methods = list(
+       setup = function(input, output, session) {
+           # noop
+       }
+   )
+)
+x <- decompose(comp())
+print(x)
+
 }
