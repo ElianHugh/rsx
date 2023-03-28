@@ -21,7 +21,7 @@ component(
 
 \item{template}{function that returns a taglist}
 
-\item{styles}{named list of "global" and "scoped" styles}
+\item{styles}{character vector of length 1}
 }
 \description{
 TODO

@@ -216,15 +216,12 @@ NULL
 #'
 #' @description
 #'
-#' The styles argument is a named list of scoped and global CSS styles.
+#' The styles argument is a character vector of length 1
 #'
 #' @details
 #'
 #' ```r
-#' list(
-#'  scoped = "",
-#'  global = ""
-#' )
+#' "a { color: red; }"
 #' ````
 #'
 #' @name component-styles

@@ -4,13 +4,10 @@
 \alias{component-styles}
 \title{Component Styles}
 \description{
-The styles argument is a named list of scoped and global CSS styles.
+The styles argument is a character vector of length 1
 }
 \details{
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{list(
- scoped = "",
- global = ""
-)
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{"a \{ color: red; \}"
 }\if{html}{\out{</div>}}
 }
 \seealso{
