@@ -7,14 +7,13 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 [![Codecov test coverage](https://codecov.io/gh/ElianHugh/rsx/branch/main/graph/badge.svg)](https://app.codecov.io/gh/ElianHugh/rsx?branch=main)
 <!-- badges: end -->
 
-## -- Work In Progress --
-
 Create complex yet manageable Shiny applications with nestable components that encapsulate both UI and state. Heavily inspired by many JS frameworks, particularly vue.
 
 <b>Features</b>:
 
 * Nestable and modular templating system
 * Scoped CSS to isolate styles between components
+* Automatic namespacing (think shiny modules)
 
 ## Why rsx?
 
