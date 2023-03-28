@@ -3,3 +3,19 @@ template:
   bootstrap: 5
   params:
       bootswatch: flatly
+reference:
+- title: "Core Functions"
+  desc: "Functions that are fundamental to rsx"
+  contents:
+  - component
+  - rsx_app
+- title: "Misc"
+  desc: "Functions for misc. purposes"
+  - is.component
+- title: "Advanced"
+  desc: "Functions that are useful for getting rsx to work with opinionated shiny frameworks"
+  contents:
+  - rsx_ui
+  - rsx_server
+  - rsx_module_server
+  - decompose
