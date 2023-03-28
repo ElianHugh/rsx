@@ -2,7 +2,7 @@
 % Please edit documentation in R/compilation.R
 \name{rsx_module_server}
 \alias{rsx_module_server}
-\title{RSX Module Server}
+\title{Create an rsx module server}
 \usage{
 rsx_module_server(id)
 }
@@ -10,5 +10,7 @@ rsx_module_server(id)
 \item{id}{unique namespace}
 }
 \description{
-RSX Module Server
+\code{rsx_module_server} is a low-level function that loads up the module servers of all instantiated components.
+This is similar to \code{rsx_server}, but also allows for namespacing
+the rsx server.
 }

@@ -3,3 +3,24 @@ template:
   bootstrap: 5
   params:
       bootswatch: flatly
+reference:
+- title: "Components"
+  desc: "Component infrastructure"
+  contents:
+  - component
+  - rsx_app
+  - component-data
+  - component-template
+  - component-methods
+  - component-styles
+- title: "Misc"
+  desc: "Functions for misc. purposes"
+  contents:
+  - is.component
+- title: "Advanced"
+  desc: "Functions that are useful for getting rsx to work with opinionated shiny frameworks"
+  contents:
+  - rsx_ui
+  - rsx_server
+  - rsx_module_server
+  - decompose

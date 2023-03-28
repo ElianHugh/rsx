@@ -10,14 +10,16 @@ rsx_server()
 shiny server function
 }
 \description{
-\verb{rsx server} is a low-level function that loads up the module servers of all instantiated rsx::components.
+\code{rsx_server} is a low-level function that loads up the module servers of all instantiated rsx::components.
 If the \code{rsx_app} function is not viable for your shiny application setup, the rsx_server function
 can be used.
 }
 \details{
 Some things to note:
-* Due to randomised hashing of component namepaces, shiny modules are not nested in rsx
-* If a component does not have a setup function, a module will not be created for the instance
+\itemize{
+\item Due to randomised hashing of component namepaces, shiny modules are not nested in rsx
+\item If a component does not have a setup function, a module server will not be created for the instance
+}
 }
 \seealso{
 Other compilation: 
