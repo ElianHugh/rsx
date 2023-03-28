@@ -11,6 +11,7 @@ reference:
   - rsx_app
 - title: "Misc"
   desc: "Functions for misc. purposes"
+  contents:
   - is.component
 - title: "Advanced"
   desc: "Functions that are useful for getting rsx to work with opinionated shiny frameworks"
