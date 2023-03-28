@@ -1,8 +1,8 @@
 test_that("styles validation", {
     reset_rsx_env()
-    expect_error(
+    expect_no_error(
         component(
-            styles = "a"
+            styles = "a {}"
         )
     )
     expect_error(
@@ -27,9 +27,7 @@ test_that("scoped styles", {
     reset_rsx_env()
 
     x <- component(
-        styles = list(
-            scoped = ""
-        )
+        styles = ""
     )
 
     expect_no_error(print(x()))
@@ -41,9 +39,7 @@ test_that("scoped styles", {
         template = function(ns) {
             shiny::div()
         },
-        styles = list(
-            scoped = "* { color: red }"
-        )
+        styles =  "* { color: red }"
     )
 
     expect_identical(

@@ -79,7 +79,7 @@ manage_data <- function(..., instance_object) {
 }
 
 manage_scoping <- function(element, instance_object) {
-    if (length(instance_object$component$styles$scoped) > 0L) {
+    if (!is.null(instance_object$component$styles)) {
         args <- alist("")
         names(args) <- paste0("data-rsx-", attr(instance_object$component, "component_id"))
         htmltools::tagQuery(wrap_tags(element))$

@@ -2,6 +2,7 @@ postfix_css <- function(css, hash) {
     tryCatch(
         expr = {
             css <- gsub("\r?\n|\r", "", css)
+
             rsx_env$js$call("scopeComponentCSS", css, hash)
         },
         warning = function(w) {
@@ -66,11 +67,8 @@ aggregate_styles <- function() {
     components <- instances_to_component_list()
     for (id in names(components)) {
         comp <- components[[id]]
-        if (!is.null(comp$styles$scoped)) {
-            css <- append(css, comp$styles$scoped)
-        }
-        if (!is.null(comp$styles$global)) {
-            css <- append(css, comp$styles$global)
+        if (!is.null(comp$styles)) {
+            css <- append(css, comp$styles)
         }
     }
     css <- paste(css, collapse = "\n", sep = "\n")
