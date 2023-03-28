@@ -55,20 +55,17 @@
 </h1></div>
 <!-- badges: start -->
 
-<div class="section level2">
-<h2 id="id_-work-in-progress-">– Work In Progress –<a class="anchor" aria-label="anchor" href="#id_-work-in-progress-"></a>
-</h2>
 <p>Create complex yet manageable Shiny applications with nestable components that encapsulate both UI and state. Heavily inspired by many JS frameworks, particularly vue.</p>
 <p><b>Features</b>:</p>
 <ul>
 <li>Nestable and modular templating system</li>
 <li>Scoped CSS to isolate styles between components</li>
+<li>Automatic namespacing (think shiny modules)</li>
 </ul>
-</div>
 <div class="section level2">
 <h2 id="why-rsx">Why rsx?<a class="anchor" aria-label="anchor" href="#why-rsx"></a>
 </h2>
-<p>When writing Shiny apps, I often found that I was getting confused when juggling modules. Specifically, I found having to remember the relationship between module server and module UI frustrating – if my the UI for “module A” <em>always</em> links to the server for “module A”, why do I have to keep track of two objects? {rsx} seeks to resolve this cognitive overhead by ensuring that module A UI and server are <em>always</em> coupled.</p>
+<p>When writing Shiny apps, I often found that I was getting confused when juggling modules. Specifically, I found having to remember the relationship between module server and module UI frustrating – if the the UI for <code>module A</code> <em>always</em> links to the server for <code>module A</code>, why do I have to keep track of two objects? This package seeks to resolve this cognitive overhead by ensuring that module servers and UI are <em>always</em> coupled under one object.</p>
 </div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
