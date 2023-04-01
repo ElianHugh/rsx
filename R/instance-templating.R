@@ -59,7 +59,8 @@ template_tag <- function(instance_object, template, contents, .noWS = NULL) {
     structure(
         tag,
         # used for decomposition
-        instance = instance_object
+        instance = instance_object,
+        class = c("instance_tag", "shiny.tag")
     )
 }
 
