@@ -7,6 +7,7 @@ test_that("template validation", {
     )
 })
 
+
 test_that(
     "template self access",
     {
@@ -30,7 +31,7 @@ test_that(
             }
         )
         expect_identical(
-            get_tag_output(comp()),
+            get_tag_output(as_shiny_tag(comp())),
             get_tag_output(shiny::tagList(
                 shiny::p("bar"),
                 shiny::p("bar")
@@ -50,7 +51,7 @@ test_that("slotting", {
         }
     )
     expect_identical(
-        get_tag_output(x()),
+        get_tag_output(as_shiny_tag(x())),
         ""
     )
 
@@ -70,7 +71,7 @@ test_that("slotting", {
     )
 
     expect_identical(
-        get_tag_output(x()),
+        get_tag_output(as_shiny_tag(x())),
         get_tag_output(
             shiny::tagList(
                 shiny::div(),
@@ -81,7 +82,7 @@ test_that("slotting", {
 
     expect_identical(
         get_tag_output(
-            x(shiny::p("foo"))
+            as_shiny_tag(x(shiny::p("foo")))
         ),
         get_tag_output(
             shiny::tagList(
@@ -94,7 +95,7 @@ test_that("slotting", {
 
     expect_identical(
         get_tag_output(
-            x(shiny::p("foo", slot = "b"))
+            as_shiny_tag(x(shiny::p("foo", slot = "b")))
         ),
         get_tag_output(
             shiny::tagList(
@@ -108,12 +109,12 @@ test_that("slotting", {
 
     expect_identical(
         get_tag_output(
-            x(
+            as_shiny_tag(x(
                 shiny::p("foo", slot = "a"),
                 shiny::p("bar", slot = "b"),
                 shiny::p("baz", slot = "c"),
                 shiny::p("foobarbaz")
-            )
+            ))
         ),
         get_tag_output(
             shiny::tagList(
@@ -142,9 +143,9 @@ test_that("nesting", {
     # 2 layer
     expect_identical(
         get_tag_output(
-            x(
+            as_shiny_tag(x(
                 x()
-            )
+            ))
         ),
         get_tag_output(
             shiny::div(
@@ -156,11 +157,11 @@ test_that("nesting", {
     # 3 layer
     expect_identical(
         get_tag_output(
-            x(
+            as_shiny_tag(x(
                 x(
                     x()
                 )
-            )
+            ))
         ),
         get_tag_output(
             shiny::div(

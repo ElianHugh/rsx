@@ -52,7 +52,7 @@ format.component <- function(x, ...) {
         "%s %s",
         cli::col_grey("<rsx::component>") |>
             cli::style_italic(),
-        x$name
+        cli::col_cyan(paste0("`", x$name, "`"))
     )
     namespace <- sprintf("Namespace: %s", format(x$.parent))
     instances <- sprintf("Instances: %s", length(get_component_instances(x$name)))
@@ -96,9 +96,12 @@ format.component <- function(x, ...) {
 #' @export
 format.instance_tag <- function(x, ...) {
     output <- htmltools::HTML(as.character(x))
+    header <- cli::col_grey("<rsx::instance>") |>
+        cli::style_italic()
+    header2 <- paste0("`", attr(x, "instance")$component$name, "`") |>
+        cli::col_cyan()
     c(
-        cli::col_grey("<rsx::instance>") |>
-            cli::style_italic(),
+        paste(header, header2),
         output
     )
 }
