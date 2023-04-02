@@ -157,3 +157,13 @@ rsx_module_server <- function(id) {
         }
     })
 }
+
+instances_to_component_list <- function() {
+    instances <- get_instances()
+    comps <- vector(mode = "list")
+    for (inst in instances) {
+        comp <- inst[["component"]]
+        comps[[comp$name]] <- comp
+    }
+    comps
+}

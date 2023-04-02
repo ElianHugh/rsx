@@ -69,7 +69,7 @@ manage_data <- function(..., instance_object) {
     supplied_data <- contents[["data"]]
     if (!is.null(supplied_data)) {
         if (length(instance_object$component$data) > 0L &&
-            check_data_specification(supplied_data, instance_object$internal$self)) {
+            assert_data_specification(supplied_data, instance_object$internal$self)) {
             contents <- contents[names(contents) != "data"]
             list2env(supplied_data, instance_object$internal$self)
         } else {

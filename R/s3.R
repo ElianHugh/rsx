@@ -31,6 +31,33 @@
 `$<-.component` <- `[[<-.component`
 
 #' @export
+names.component <- function(x) {
+    c(
+        "name",
+        "data",
+        "methods",
+        "template",
+        "styles"
+    )
+}
+
+#' Is a component
+#'
+#' @param x object
+#' @export
+is.component <- function(x) {
+    inherits(x, "component")
+}
+
+#' Is an instance tag
+#'
+#' @param x object
+#' @export
+is.instance_tag <- function(x) {
+    inherits(x, "instance_tag")
+}
+
+#' @export
 print.component <- function(x, ...) {
     cat(
         format(x, ...),
@@ -54,7 +81,7 @@ format.component <- function(x, ...) {
             cli::style_italic(),
         cli::col_cyan(paste0("`", x$name, "`"))
     )
-    namespace <- sprintf("Namespace: %s", format(x$.parent))
+    namespace <- sprintf("Namespace: %s", format(x$.namespace))
     instances <- sprintf("Instances: %s", length(get_component_instances(x$name)))
     subcvals <- c(
         ifelse(
@@ -104,23 +131,4 @@ format.instance_tag <- function(x, ...) {
         paste(header, header2),
         output
     )
-}
-
-#' @export
-names.component <- function(x) {
-    c(
-        "name",
-        "data",
-        "methods",
-        "template",
-        "styles"
-    )
-}
-
-#' Is a component
-#'
-#' @param x object
-#' @export
-is.component <- function(x) {
-    inherits(x, "component")
 }

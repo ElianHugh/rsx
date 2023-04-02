@@ -39,7 +39,7 @@ new_instance <- function(comp) {
     inst_data_nms <- names(inst_data)
     inst_method_nms <- names(inst_methods)
 
-    if (check_name_duplication(inst_data_nms, inst_method_nms)) {
+    if (assert_no_name_duplication(inst_data_nms, inst_method_nms)) {
         nms <- c(
             inst_data_nms,
             inst_method_nms
@@ -59,7 +59,7 @@ new_instance <- function(comp) {
 }
 
 create_env_bindings <- function(comp) {
-    this <- new.env(parent = attr(comp, ".parent"), hash = FALSE)
+    this <- new.env(parent = attr(comp, ".namespace"), hash = FALSE)
     internal <- new.env(parent = this, hash = FALSE)
     internal[["self"]] <- new.env(parent = internal, hash = FALSE)
     this[["instance_id"]] <- paste0("instance-", random_id())
@@ -92,8 +92,6 @@ create_env_bindings <- function(comp) {
     this
 }
 
-
-
 validate_instance <- function(self) {
     if (length(names(self$data)) != length(self$data)) {
         return("$data must be a named list.")
@@ -120,8 +118,7 @@ instantiate_template <- function(tmp, env) {
     invisible(tmp)
 }
 
-set_instance_hook <- function(inst, val) {
-    attrs <- attributes(inst)
-    attributes(val) <- attrs
-    invisible(val)
+register_component_instance <- function(inst) {
+    rsx_env[["instances"]][[inst$instance_id]] <- inst
+    invisible(inst)
 }
