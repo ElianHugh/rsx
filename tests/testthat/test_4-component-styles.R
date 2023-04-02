@@ -53,24 +53,23 @@ test_that("scoped styles", {
     )
 })
 
-# test_that("styles should be overwritten with same-named components", {
-#     suppressMessages({
-#         reset_rsx_env()
-#         x <- component(
-#             name = "foo",
-#             styles = list(
-#                 "scoped" = "a {color: red;}"
-#             )
-#         )
-#         # overwrite
-#         x <- component(
-#             name = "foo",
-#             styles = list(
-#                 "scoped" = "a {color: blue;}"
-#             )
-#         )
-#         styles <- aggregate_styles()
-#         expect_false(grepl("color:red", styles))
-#         expect_true(grepl("color:blue", styles))
-#     })
-# })
+test_that("styles should be overwritten with same-named components", {
+    suppressMessages({
+        reset_rsx_env()
+        x <- component(
+            name = "foo",
+            styles = "a {color: red;}"
+        )()
+        styles <- aggregate_styles()
+        expect_true(grepl("color: red", styles))
+
+        # overwrite
+        x <- component(
+            name = "foo",
+            styles = "a {color: blue;}"
+        )()
+        styles <- aggregate_styles()
+        expect_false(grepl("color: red", styles))
+        expect_true(grepl("color: blue", styles))
+    })
+})

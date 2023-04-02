@@ -11,7 +11,9 @@ test_that("server ns == template ns", {
         }
     )
     template_ns <- capture.output(print(as_shiny_tag(x())))
-    server_ns <- capture.output(shiny::testServer(rsx_server(), {}))
+    server_ns <- capture.output(shiny::testServer(rsx_server(), {
+        #noop
+    }))
 
     expect_identical(
         template_ns,

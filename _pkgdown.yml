@@ -17,6 +17,7 @@ reference:
   desc: "Functions for misc. purposes"
   contents:
   - is.component
+  - is.instance_tag
 - title: "Advanced"
   desc: "Functions that are useful for getting rsx to work with opinionated shiny frameworks"
   contents:
