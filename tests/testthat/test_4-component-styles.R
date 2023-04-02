@@ -43,7 +43,7 @@ test_that("scoped styles", {
     )
 
     expect_identical(
-        get_tag_output(x()),
+        get_tag_output(as_shiny_tag(x())),
         sprintf('<div data-rsx-%s=""></div>', attr(x, "component_id"))
     )
 

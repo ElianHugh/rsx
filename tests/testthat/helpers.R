@@ -6,3 +6,8 @@ get_tag_output <- function(tag) {
         collapse = ""
     )
 }
+
+as_shiny_tag <- function(x) {
+    class(x) <- "shiny.tag"
+    x
+}

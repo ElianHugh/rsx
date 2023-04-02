@@ -21,9 +21,9 @@ test_that("decompose", {
 
     expect_identical(
         get_tag_output(
-            lst$ui
+            as_shiny_tag(lst$ui)
         ),
-        get_tag_output(x$template())
+        get_tag_output(as_shiny_tag(x$template()))
     )
 
     expect_error(decompose(shiny::div()))
