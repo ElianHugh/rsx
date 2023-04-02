@@ -77,6 +77,7 @@ Slots are placeholder elements that tell rsx where tags should be placed.</p>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu">x</span><span class="op">(</span><span class="fu">shiny</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html" class="external-link">p</a></span><span class="op">(</span><span class="st">"foo"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; &lt;rsx::instance&gt; `unnamed_component-ZE40566ox`</span></span>
 <span><span class="co">#&gt; &lt;p&gt;foo&lt;/p&gt;</span></span>
 <span><span class="co">#&gt; &lt;p&gt;bar&lt;/p&gt;</span></span></code></pre><p></p></div>
 <p>You can also specify if you'd like content to be used in the case that a
@@ -89,7 +90,8 @@ slot isn't filled -- this is typically called "fallback" content.</p>
 <span>    <span class="op">}</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu">x</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div><div class="section">
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu">x</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; &lt;rsx::instance&gt; `unnamed_component-DJ32934xr`</span></span></code></pre><p></p></div><div class="section">
 <h3 id="named-slots">Named Slots<a class="anchor" aria-label="anchor" href="#named-slots"></a></h3>
 
 
@@ -104,6 +106,7 @@ can be used to target specific areas of the template.</p>
 <span>    <span class="op">}</span></span>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu">x</span><span class="op">(</span><span class="fu">shiny</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html" class="external-link">p</a></span><span class="op">(</span><span class="st">"bar"</span>, slot <span class="op">=</span> <span class="st">"b"</span><span class="op">)</span>, <span class="fu">shiny</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html" class="external-link">p</a></span><span class="op">(</span><span class="st">"foo"</span>, slot <span class="op">=</span> <span class="st">"a"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; &lt;rsx::instance&gt; `unnamed_component-VA47776yg`</span></span>
 <span><span class="co">#&gt; &lt;p&gt;foo&lt;/p&gt;</span></span>
 <span><span class="co">#&gt; &lt;p&gt;bar&lt;/p&gt;</span></span></code></pre><p></p></div>
 </div>
