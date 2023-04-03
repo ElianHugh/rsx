@@ -6,11 +6,13 @@
 #' logic and UI into a singular object, and can be used like
 #' any other shiny tag.
 #'
+#' For more information on the data, methods, template, and styles arguments, see related documentation.
+#'
 #' @param name component name
-#' @param data  function that returns a named list
-#' @param methods named list of functions
+#' @param data a function that returns a named list of values, which are used to store the component's state
+#' @param methods named list of functions, which define the behavior of the component
 #' @param template function that returns a taglist
-#' @param styles character vector of length 1
+#' @param styles character vector of CSS styles that are scoped to the component
 #'
 #' @examples
 #' library(shiny)
@@ -53,7 +55,7 @@
 #' component-styles.R,
 #' component-template.R
 #' @export
-component <- function(name = paste0("unnamed_component-", random_id()),
+component <- function(name = sprintf("unnamed_component-%s", random_id()),
                       data = NULL,
                       methods = NULL,
                       template = NULL,
@@ -74,7 +76,7 @@ component <- function(name = paste0("unnamed_component-", random_id()),
 }
 
 new_component <- function(name, data, methods, template, styles, namespace) {
-    component_id <- paste0(name, random_id())
+    component_id <- sprintf("%s%s", name, random_id())
     structure(
         function(...) {
             instantiate(sys.function())(...)

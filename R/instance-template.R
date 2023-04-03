@@ -1,6 +1,6 @@
 set_namespace <- function(id) {
     if (!is.null(rsx_env[["ns"]])) {
-        out <- paste0(rsx_env$ns, "-", id)
+        out <- sprintf("%s-%s", rsx_env$ns, id)
         shiny::NS(out)
     } else {
         shiny::NS(id)
@@ -82,7 +82,7 @@ manage_data <- function(..., instance_object) {
 manage_scoping <- function(element, instance_object) {
     if (!is.null(instance_object$component$styles)) {
         args <- alist("")
-        names(args) <- paste0("data-rsx-", attr(instance_object$component, "component_id"))
+        names(args) <- sprintf("data-rsx-%s", attr(instance_object$component, "component_id"))
         htmltools::tagQuery(wrap_tags(element))$
             each(function(x, i) add_scoping(x, i, args))$
             find("*")$
@@ -155,9 +155,10 @@ manage_slots <- function(element, children, instance_object) {
         each(function(x, i) {
         if (length(x$children) > 0L) {
             get_index <- function(parent) {
-                which(as.logical(lapply(parent$children, function(child) {
+                vapply(parent$children, function(child) {
                     identical(child$envKey, x$envKey)
-                })))
+                }, logical(1L)) |>
+                    which()
             }
             index <- get_index(x$parent)
             x$parent$children <- append(

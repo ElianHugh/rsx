@@ -3,14 +3,17 @@
 #' @description
 #'
 #' Methods are a list of functions that are contained within a given component,
-#' and typically will do work with component data.
+#' and typically will manipulate component data or respond to user input.
 #'
 #' Methods can be accessed in both other methods and the component template
 #' via the `self` keyword.
 #'
 #' @details
 #'
-#' The following is an excerpt from a simple counter component:
+#' Methods are defined in the component definition as a named list of functions.
+#'
+#' For example, the following is a method section from a simple counter component that defines two methods,
+#' setup and increment, which respectively set up the module server and increment the count state:
 #'
 #' ```r
 #' methods = list(
@@ -32,8 +35,10 @@
 #'
 #' ### Setup
 #'
-#' The `setup` hook is defined by passing a function named "setup" to the
+#' The setup hook is defined by passing a function named "setup" to the
 #' methods list. Setup is used as the module server for the component.
+#' This method is called when the module is first initialized, and is used to set up
+#' input/output bindings and any other necessary initialization code.
 #'
 #' ```r
 #' setup = function(input, output, session) {

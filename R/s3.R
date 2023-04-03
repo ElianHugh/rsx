@@ -79,7 +79,7 @@ format.component <- function(x, ...) {
         "%s %s",
         cli::col_grey("<rsx::component>") |>
             cli::style_italic(),
-        cli::col_cyan(paste0("`", x$name, "`"))
+        cli::col_cyan(sprintf("`%s`", x$name))
     )
     namespace <- sprintf("Namespace: %s", format(x$.namespace))
     instances <- sprintf("Instances: %s", length(get_component_instances(x$name)))
@@ -101,7 +101,7 @@ format.component <- function(x, ...) {
         subcomp_header <- "Subcomponents: "
         subcomps <- vapply(subcvals, function(s) {
             if (!is.null(s)) {
-                paste(" - ", s)
+                sprintf(" - %s", s)
             } else {
                 ""
             }
@@ -125,10 +125,10 @@ format.instance_tag <- function(x, ...) {
     output <- htmltools::HTML(as.character(x))
     header <- cli::col_grey("<rsx::instance>") |>
         cli::style_italic()
-    header2 <- paste0("`", attr(x, "instance")$component$name, "`") |>
+    header2 <- sprintf("`%s`", attr(x, "instance")$component$name) |>
         cli::col_cyan()
     c(
-        paste(header, header2),
+        sprintf("%s %s", header, header2),
         output
     )
 }

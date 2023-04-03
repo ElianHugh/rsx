@@ -71,7 +71,7 @@ aggregate_styles <- function() {
             css <- append(css, comp$styles)
         }
     }
-    css <- paste(css, collapse = "\n", sep = "\n")
-    transform_css(css) |>
+    paste(css, collapse = "\n", sep = "\n") |>
+        transform_css() |>
         minify_css()
 }
