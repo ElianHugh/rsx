@@ -53,7 +53,7 @@
 #' component-styles.R,
 #' component-template.R
 #' @export
-component <- function(name = paste0("unnamed_component-", random_id()),
+component <- function(name = sprintf("unnamed_component-%s", random_id()),
                       data = NULL,
                       methods = NULL,
                       template = NULL,
@@ -74,7 +74,7 @@ component <- function(name = paste0("unnamed_component-", random_id()),
 }
 
 new_component <- function(name, data, methods, template, styles, namespace) {
-    component_id <- paste0(name, random_id())
+    component_id <- sprintf("%s%s", name, random_id())
     structure(
         function(...) {
             instantiate(sys.function())(...)

@@ -62,7 +62,7 @@ create_env_bindings <- function(comp) {
     this <- new.env(parent = attr(comp, ".namespace"), hash = FALSE)
     internal <- new.env(parent = this, hash = FALSE)
     internal[["self"]] <- new.env(parent = internal, hash = FALSE)
-    this[["instance_id"]] <- paste0("instance-", random_id())
+    this[["instance_id"]] <- sprintf("instance-%s", random_id())
     this[["component"]] <- comp
     this[["internal"]] <- internal
     this[["template"]] <- instantiate_template(
