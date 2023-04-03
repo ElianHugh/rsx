@@ -4,11 +4,19 @@
 \alias{component-styles}
 \title{Component Styles}
 \description{
-The styles argument is a character vector of length 1
+The styles argument is a character vector of length 1 that defines the styles for the component.
+Styles are scoped to the component.
 }
 \details{
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{"a \{ color: red; \}"
+The styles argument takes a character vector of length 1 that defines the styles for the component.
+For example:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{styles = "a \{ color: red; \}"
 }\if{html}{\out{</div>}}
+
+This would define the CSS styles for the anchor elements (\verb{<a>}) in the component, setting their color to red.
+Styles defined in this way are scoped to the component, meaning they will only apply to
+elements within that component.
 }
 \seealso{
 Other components: 

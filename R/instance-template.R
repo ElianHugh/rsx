@@ -155,9 +155,10 @@ manage_slots <- function(element, children, instance_object) {
         each(function(x, i) {
         if (length(x$children) > 0L) {
             get_index <- function(parent) {
-                which(as.logical(lapply(parent$children, function(child) {
+                vapply(parent$children, function(child) {
                     identical(child$envKey, x$envKey)
-                })))
+                }, logical(1L)) |>
+                    which()
             }
             index <- get_index(x$parent)
             x$parent$children <- append(

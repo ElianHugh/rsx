@@ -5,7 +5,7 @@
 \title{Create a component}
 \usage{
 component(
-  name = paste0("unnamed_component-", random_id()),
+  name = sprintf("unnamed_component-\%s", random_id()),
   data = NULL,
   methods = NULL,
   template = NULL,
@@ -15,18 +15,20 @@ component(
 \arguments{
 \item{name}{component name}
 
-\item{data}{function that returns a named list}
+\item{data}{a function that returns a named list of values, which are used to store the component's state}
 
-\item{methods}{named list of functions}
+\item{methods}{named list of functions, which define the behavior of the component}
 
 \item{template}{function that returns a taglist}
 
-\item{styles}{character vector of length 1}
+\item{styles}{character vector of CSS styles that are scoped to the component}
 }
 \description{
 Components represent the encapsulation of a shiny module's
 logic and UI into a singular object, and can be used like
 any other shiny tag.
+
+For more information on the data, methods, template, and styles arguments, see related documentation.
 }
 \examples{
 library(shiny)

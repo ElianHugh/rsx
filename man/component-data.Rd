@@ -11,6 +11,10 @@ Both component templates and methods have access to component data.
 \details{
 \subsection{Creating data}{
 
+To create component data, define a function that returns a list of named
+objects. These objects can be Shiny reactive objects, data frames, lists,
+or any other R object.
+
 For instance, the following is a valid data function:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{function() \{
@@ -39,12 +43,17 @@ For example, the following component defines the data \code{foo}, and accesses i
 )
 
 print(x())
-#> <rsx::instance> `unnamed_component-JL33854tl`
+#> <rsx::instance> `unnamed_component-YA25591hl`
 #> 1
 }\if{html}{\out{</div>}}
 }
 
 \subsection{Passing data}{
+
+To pass data to a component, use the \code{data} argument when calling the
+component function. The \code{data} argument should be a list of named objects
+that match the names of the objects defined in the component's data
+function. For example:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{x <- component(
     data = function() \{
@@ -58,7 +67,7 @@ print(x())
 )
 
 print(x(data = list(foo = 2L)))
-#> <rsx::instance> `unnamed_component-BT24012kn`
+#> <rsx::instance> `unnamed_component-TU63070wt`
 #> 2
 }\if{html}{\out{</div>}}
 }

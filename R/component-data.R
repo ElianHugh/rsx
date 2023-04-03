@@ -10,6 +10,10 @@
 #'
 #' ## Creating data
 #'
+#' To create component data, define a function that returns a list of named
+#' objects. These objects can be Shiny reactive objects, data frames, lists,
+#' or any other R object.
+#'
 #' For instance, the following is a valid data function:
 #'
 #' ```r
@@ -42,6 +46,11 @@
 #' ```
 #'
 #' ## Passing data
+#'
+#' To pass data to a component, use the `data` argument when calling the
+#' component function. The `data` argument should be a list of named objects
+#' that match the names of the objects defined in the component's data
+#' function. For example:
 #'
 #' ```{r}
 #' x <- component(

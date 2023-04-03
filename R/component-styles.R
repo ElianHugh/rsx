@@ -2,13 +2,22 @@
 #'
 #' @description
 #'
-#' The styles argument is a character vector of length 1
+#' The styles argument is a character vector of length 1 that defines the styles for the component.
+#' Styles are scoped to the component.
 #'
 #' @details
 #'
+#' The styles argument takes a character vector of length 1 that defines the styles for the component.
+#' For example:
+#'
 #' ```r
-#' "a { color: red; }"
+#' styles = "a { color: red; }"
 #' ````
+#'
+#' This would define the CSS styles for the anchor elements (`<a>`) in the component, setting their color to red.
+#' Styles defined in this way are scoped to the component, meaning they will only apply to
+#' elements within that component.
+#'
 #'
 #' @name component-styles
 #' @family components

@@ -6,11 +6,13 @@
 #' logic and UI into a singular object, and can be used like
 #' any other shiny tag.
 #'
+#' For more information on the data, methods, template, and styles arguments, see related documentation.
+#'
 #' @param name component name
-#' @param data  function that returns a named list
-#' @param methods named list of functions
+#' @param data a function that returns a named list of values, which are used to store the component's state
+#' @param methods named list of functions, which define the behavior of the component
 #' @param template function that returns a taglist
-#' @param styles character vector of length 1
+#' @param styles character vector of CSS styles that are scoped to the component
 #'
 #' @examples
 #' library(shiny)

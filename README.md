@@ -7,7 +7,7 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 [![Codecov test coverage](https://codecov.io/gh/ElianHugh/rsx/branch/main/graph/badge.svg)](https://app.codecov.io/gh/ElianHugh/rsx?branch=main)
 <!-- badges: end -->
 
-Create complex yet manageable Shiny applications with nestable components that encapsulate both UI and state. Heavily inspired by many JS frameworks, particularly vue.
+rsx is an R package for creating complex yet manageable Shiny applications with nestable components that encapsulate both UI and state. It is heavily inspired by many JavaScript frameworks, particularly Vue.
 
 <b>Features</b>:
 
@@ -17,7 +17,7 @@ Create complex yet manageable Shiny applications with nestable components that e
 
 ## Why rsx?
 
-When writing Shiny apps, I often found that I was getting confused when juggling modules. Specifically, I found having to remember the relationship between module server and module UI frustrating -- if the the UI for `module A` *always* links to the server for `module A`, why do I have to keep track of two objects? This package seeks to resolve this cognitive overhead by ensuring that module servers and UI are *always* coupled under one object.
+When writing Shiny apps, managing the relationship between module server and module UI can be challenging, leading to cognitive overhead and confusion. With rsx, module servers and UI are always coupled under one object, simplifying the process of creating and managing Shiny modules.
 
 ## Installation
 
@@ -33,3 +33,43 @@ install.packages('rsx', repos = 'https://elianhugh.r-universe.dev')
 # install.packages("devtools")
 devtools::install_github("ElianHugh/rsx")
 ```
+
+## Usage
+
+To use rsx, you define your components as functions with the component function. Components can data, a template, styles, and methods, making them fully encapsulated and reusable. Once defined, you can use these components in your Shiny app with the rsx_app function.
+
+```r
+library(rsx)
+
+counter <- component(
+    name = "counter",
+    data = function() {
+        list(
+            label = "Counter #1",
+            count = reactiveVal(0L)
+        )
+    },
+    template = function(ns) {
+        tagList(
+            actionButton(ns("button"), label = self$label),
+            verbatimTextOutput(ns("out"))
+        )
+    },
+    methods = list(
+        setup = function(input, output, session) {
+            observeEvent(input$button, {
+                self$count(
+                    self$count() + 1L
+                )
+            })
+            output$out <- renderText(
+                self$count()
+            )
+        }
+    )
+)
+
+rsx_app(counter)
+```
+
+For more information on how to define and use components with rsx, please see the package documentation or the pkgdown site.
