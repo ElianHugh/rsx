@@ -54,6 +54,9 @@ Both component templates and methods have access to component data.</p>
 <h3 id="creating-data">Creating data<a class="anchor" aria-label="anchor" href="#creating-data"></a></h3>
 
 
+<p>To create component data, define a function that returns a list of named
+objects. These objects can be Shiny reactive objects, data frames, lists,
+or any other R object.</p>
 <p>For instance, the following is a valid data function:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
 <span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
@@ -81,7 +84,7 @@ For example, the following component defines the data <code>foo</code>, and acce
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu">x</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; &lt;rsx::instance&gt; `unnamed_component-JL33854tl`</span></span>
+<span><span class="co">#&gt; &lt;rsx::instance&gt; `unnamed_component-YA25591hl`</span></span>
 <span><span class="co">#&gt; 1</span></span></code></pre><p></p></div>
 </div>
 
@@ -89,6 +92,10 @@ For example, the following component defines the data <code>foo</code>, and acce
 <h3 id="passing-data">Passing data<a class="anchor" aria-label="anchor" href="#passing-data"></a></h3>
 
 
+<p>To pass data to a component, use the <code>data</code> argument when calling the
+component function. The <code>data</code> argument should be a list of named objects
+that match the names of the objects defined in the component's data
+function. For example:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/component.html">component</a></span><span class="op">(</span></span>
 <span>    data <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
 <span>        <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
@@ -101,7 +108,7 @@ For example, the following component defines the data <code>foo</code>, and acce
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu">x</span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>foo <span class="op">=</span> <span class="fl">2L</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; &lt;rsx::instance&gt; `unnamed_component-BT24012kn`</span></span>
+<span><span class="co">#&gt; &lt;rsx::instance&gt; `unnamed_component-TU63070wt`</span></span>
 <span><span class="co">#&gt; 2</span></span></code></pre><p></p></div>
 </div>
 
