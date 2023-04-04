@@ -20,7 +20,7 @@ rsx_app <- function(root, ..., resource_path = NULL, app_class = "App") {
     stopifnot(is.character(app_class))
 
 
-    if (inherits(root, "component")) {
+    if (is.component(root)) {
         root <- root()
 
         if (

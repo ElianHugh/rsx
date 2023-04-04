@@ -5,7 +5,7 @@
 \alias{rsx-package}
 \title{rsx: shiny components}
 \description{
-What the package does (one paragraph).
+Create complex yet manageable Shiny applications with nestable components that encapsulate both UI and state. Heavily inspired by many JavaScript frameworks, particularly Vue.
 }
 \details{
 The \strong{rsx} package implements encapsulated shiny module server &

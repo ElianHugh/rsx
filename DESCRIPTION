@@ -4,7 +4,7 @@ Version: 0.0.0.9000
 Authors@R:
     person("Elian", "Thiele-Evans", , "elianhte@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-8008-3165"))
-Description: What the package does (one paragraph).
+Description: Create complex yet manageable Shiny applications with nestable components that encapsulate both UI and state. Heavily inspired by many JavaScript frameworks, particularly Vue.
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
