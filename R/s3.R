@@ -81,42 +81,69 @@ format.component <- function(x, ...) {
             cli::style_italic(),
         cli::col_cyan(sprintf("`%s`", x$name))
     )
-    namespace <- sprintf("Namespace: %s", format(x$.namespace))
+    namespace <- {
+        ns <- x$.namespace
+        if (!is.null(ns)) {
+            sprintf("Namespace: %s", ns)
+        } else {
+            NULL
+        }
+    }
     instances <- sprintf("Instances: %s", length(get_component_instances(x$name)))
     subcvals <- c(
-        ifelse(
-            identical(x[["data"]], no_op_data),
-            list(NULL),
-            "data"
-        ),
-        ifelse(
-            identical(x[["template"]], no_op_template),
-            list(NULL),
-            "template"
-        ),
-        ifelse(is.null(x[["methods"]]), list(NULL), "methods"),
-        ifelse(is.null(x[["styles"]]), list(NULL), "styles")
+        {
+            if (identical(x[["data"]], no_op_data)) {
+                list(NULL)
+            } else {
+                "data"
+            }
+        },
+        {
+          if (identical(x[["template"]], no_op_template)) {
+                list(NULL)
+          } else {
+                "template"
+          }
+        },
+        {
+            if (is.null(x[["methods"]])) {
+                list(NULL)
+            } else {
+                "methods"
+            }
+        },
+        {
+            if (is.null(x[["styles"]])) {
+                list(NULL)
+            } else {
+                "styles"
+            }
+        }
     )
     if (any(vapply(subcvals, Negate(is.null), TRUE))) {
         subcomp_header <- "Subcomponents: "
-        subcomps <- vapply(subcvals, function(s) {
-            if (!is.null(s)) {
-                sprintf(" - %s", s)
-            } else {
-                ""
+        subcomps <- lapply(
+            subcvals,
+            function(s) {
+                if (!is.null(s)) {
+                    sprintf(" - %s", s)
+                } else {
+                    NULL
+                }
             }
-        }, "")
+        ) |>
+            unlist()
     } else {
-        subcomp_header <- ""
-        subcomps <- ""
+        subcomp_header <- NULL
+        subcomps <- NULL
     }
 
     c(
         header,
         namespace,
         instances,
-        subcomp_header %||% NULL,
-        subcomps %||% NULL
+        subcomp_header,
+        subcomps
     )
 }
 
