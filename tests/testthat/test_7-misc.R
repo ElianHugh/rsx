@@ -45,7 +45,6 @@ test_that("withTags", {
             template = function(ns) {
                 shiny::withTags(
                     shiny::tagList(
-                        x(),
                         p("Bar")
                     )
                 )

@@ -39,7 +39,7 @@ test_that("scoped styles", {
         template = function(ns) {
             shiny::div()
         },
-        styles =  "* { color: red }"
+        styles = "* { color: red }"
     )
 
     expect_identical(
@@ -72,4 +72,20 @@ test_that("styles should be overwritten with same-named components", {
         expect_false(grepl("color: red", styles))
         expect_true(grepl("color: blue", styles))
     })
+})
+
+test_that("styles are compiled for each used component", {
+    reset_rsx_env()
+    comp1 <- component(
+        name = "comp1",
+        template = function(ns) {
+            comp2()
+        }
+    )
+    comp2 <- component(
+        name = "comp2",
+        styles = "* { color: blue }"
+    )
+    comp1()
+    expect_true(grepl("color: blue", aggregate_styles()))
 })
