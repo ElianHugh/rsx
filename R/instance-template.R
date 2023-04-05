@@ -24,13 +24,15 @@ template_tag <- function(instance_object, template, contents, .noWS = NULL) {
         .noWS = .noWS
     )
 
+    el <- template(
+        ns = set_namespace(instance_object$instance_id)
+    )
+
     hooks <- list(
         function(element) {
             element$name <- "component"
             children <- element[["children"]]
-            element$children <- template(
-                ns = set_namespace(instance_object$instance_id)
-            )
+            element$children <- el
             element <- manage_slots(element, children, instance_object)
             # return element children as the node is
             # wrapped in a template node

@@ -4,9 +4,9 @@
         ns[["rsx_env"]] <- new.env(
             parent = asNamespace("rsx")
         )
-        rsx_env[["components"]] <- list()
-        rsx_env[["instances"]] <- list()
     }
+    rsx_env[["components"]] <- list()
+    rsx_env[["instances"]] <- list()
 
     if (is.null(rsx_env[["js"]])) {
         rsx_env[["js"]] <- V8::v8(
