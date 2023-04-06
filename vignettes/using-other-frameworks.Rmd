@@ -1,0 +1,70 @@
+---
+title: "using-other-frameworks"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{using-other-frameworks}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(rsx)
+```
+
+# Vanilla
+
+```{r}
+#| eval: false
+x <- component()
+rsx_app(x)
+```
+
+# Rhino
+
+Appsilon's {rhino} package uses an opinionated folder structure for Shiny applications, with an application's entrypoint being in its `app.R` file:
+
+```{r}
+#| eval: false
+# Rhino / shinyApp entrypoint. Do not edit.
+rhino::app()
+```
+
+Rhino eventually uses `ui` and `server` objects from `app/main.R` as the entry point, so `rsx_ui` and `rsx_module_server` must be used in order to setup {rsx}.
+
+```{r}
+#| eval: false
+x <- component()
+
+# appsilon's rhino app/main.R
+ui <- function(id) {
+  rsx_ui(
+    app(),
+    id = id,
+    app_class = "App"
+  )
+}
+
+#' @export
+server <- function(id) {
+  rsx_module_server(id)
+}
+
+```
+
+# Golem
+
+Golem uses the functions `app_ui` and `app_server` for a given Shiny application's entrypoint, and so {rsx} can be used without much difficulty:
+
+```{r}
+#| eval: false
+x <- component()
+app_ui <- function() rsx_ui(x)
+app_server <- rsx_server
+```
