@@ -30,8 +30,7 @@ new_styles_property <- function(styles, hash) {
         if (!is.character(styles)) {
             error_component_invalid_styles()
         }
-
-        styles <- sprintf(".%s { %s }", hash, styles) |>
+        sprintf(".%s { %s }", hash, styles) |>
             sass::sass()
     } else {
         NULL
