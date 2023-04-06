@@ -87,11 +87,9 @@ manage_data <- function(..., instance_object) {
 
 manage_scoping <- function(element, instance_object) {
     if (!is.null(instance_object$component$styles)) {
-        args <- alist("")
-        names(args) <- sprintf("data-rsx-%s", attr(instance_object$component, "component_id"))
-        htmltools::tagQuery(wrap_tags(element))$
-            each(function(x, i) add_scoping(x, i, args))$
-            find("*")$
+        args <- attr(instance_object$component, "component_id")
+        htmltools::tagQuery(element)$
+            children()$
             each(function(x, i) add_scoping(x, i, args))$
             allTags()
     } else {
@@ -101,10 +99,10 @@ manage_scoping <- function(element, instance_object) {
 
 add_scoping <- function(tag, i, args) {
     do.call(
-        shiny::tagAppendAttributes,
+        htmltools::tagAppendAttributes,
         args = c(
             tag = tag,
-            args
+            class = args
         )
     )
 }

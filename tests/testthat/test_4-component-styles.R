@@ -44,12 +44,43 @@ test_that("scoped styles", {
 
     expect_identical(
         get_tag_output(as_shiny_tag(x())),
-        sprintf('<div data-rsx-%s=""></div>', attr(x, "component_id"))
+        sprintf('<div class="%s"></div>', attr(x, "component_id"))
     )
 
     expect_identical(
-        aggregate_styles(),
-        sprintf('*[data-rsx-%s=\"\"] { color: red }', attr(x, "component_id"))
+        gsub("\\s", "", aggregate_styles()),
+        sprintf(".%s*{color:red;}", attr(x, "component_id"))
+    )
+
+    reset_rsx_env()
+
+    wide <- component(
+        name = "wide",
+        template = function(ns) {
+            shiny::tagList(
+                shiny::div(),
+                shiny::div(
+                    shiny::p()
+                )
+            )
+        },
+        styles = "
+            div { color: red }
+        "
+    )
+    wide_tag <- wide()
+    expect_identical(
+        as.character(htmltools::renderTags(wide_tag)$html),
+        sprintf(
+            "<div class=\"%s\"></div>\n<div class=\"%s\">\n  <p></p>\n</div>",
+            attr(wide, "component_id"),
+            attr(wide, "component_id")
+        )
+    )
+
+    expect_identical(
+        gsub("\\s", "", aggregate_styles()),
+        sprintf(".%sdiv{color:red;}", attr(wide, "component_id"))
     )
 })
 
