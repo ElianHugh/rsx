@@ -25,6 +25,12 @@ Both component templates and methods have access to component data."><!-- mathja
       <ul class="navbar-nav me-auto"><li class="active nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
+<li class="nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/using-other-frameworks.html">using-other-frameworks</a>
+  </div>
+</li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
@@ -84,7 +90,7 @@ For example, the following component defines the data <code>foo</code>, and acce
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu">x</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; &lt;rsx::instance&gt; `unnamed_component-NG48820qm`</span></span>
+<span><span class="co">#&gt; &lt;rsx::instance&gt; `unnamed_component-BC48785ik`</span></span>
 <span><span class="co">#&gt; 1</span></span></code></pre><p></p></div>
 </div>
 
@@ -108,7 +114,7 @@ function. For example:</p>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu">x</span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>foo <span class="op">=</span> <span class="fl">2L</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; &lt;rsx::instance&gt; `unnamed_component-NI65459ml`</span></span>
+<span><span class="co">#&gt; &lt;rsx::instance&gt; `unnamed_component-PZ32478yb`</span></span>
 <span><span class="co">#&gt; 2</span></span></code></pre><p></p></div>
 </div>
 
