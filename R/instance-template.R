@@ -18,6 +18,10 @@ new_tag_function <- function(instance_object, template) {
 }
 
 template_tag <- function(instance_object, template, contents, .noWS = NULL) {
+    if (shiny::isRunning()) {
+        error_component_runtime(instance_object)
+    }
+
     tag <- htmltools::tag(
         instance_object$component$name,
         varArgs = contents,
