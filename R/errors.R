@@ -119,3 +119,15 @@ error_instance_assignment <- function(instance_object, assigned_name) {
         call. = FALSE
     )
 }
+
+error_component_runtime <- function(instance_object) {
+    msg <- c(
+        sprintf("rsx component `%s` was called during Shiny runtime", instance_object$component$name),
+        "- components cannot be rendered outside of `template` functions",
+        "- was a component called from a setup function?"
+    )
+    stop(
+        paste(msg, collapse = "\n"),
+        call. = FALSE
+    )
+}
