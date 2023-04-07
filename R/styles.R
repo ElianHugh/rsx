@@ -2,14 +2,22 @@ compile_styles <- function(static_path = NULL) {
     message("Compiling component CSS...")
     res <- aggregate_styles()
     if (is.null(static_path)) {
-        res
+        sass::sass(
+            res,
+            sass::sass_options(
+                output_style = "compressed"
+            )
+        )
     } else {
         path <- file.path(static_path, "rsx.min.css")
         message(paste0("  - CSS compiled to: ", path))
-        con <- file(path)
-        writeLines(res, con)
-        close(con)
-        static_path
+        sass::sass(
+            res,
+            sass::sass_options(
+                output_style = "compressed",
+                output_path = path
+            )
+        )
     }
 }
 

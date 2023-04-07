@@ -51,9 +51,10 @@ test_that("scoped styles", {
         gsub("\\s", "", aggregate_styles()),
         sprintf(".%s*{color:red;}", attr(x, "component_id"))
     )
+})
 
+test_that("sass", {
     reset_rsx_env()
-
     wide <- component(
         name = "wide",
         template = function(ns) {
