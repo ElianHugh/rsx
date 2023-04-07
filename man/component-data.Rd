@@ -43,7 +43,7 @@ For example, the following component defines the data \code{foo}, and accesses i
 )
 
 print(x())
-#> <rsx::instance> `unnamed_component-BC48785ik`
+#> <rsx::instance> `unnamed_component-LN101173ou`
 #> 1
 }\if{html}{\out{</div>}}
 }
@@ -67,7 +67,7 @@ function. For example:
 )
 
 print(x(data = list(foo = 2L)))
-#> <rsx::instance> `unnamed_component-PZ32478yb`
+#> <rsx::instance> `unnamed_component-PC77821nw`
 #> 2
 }\if{html}{\out{</div>}}
 }

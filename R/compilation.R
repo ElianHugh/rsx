@@ -24,8 +24,7 @@ rsx_app <- function(root, ..., resource_path = NULL, app_class = "App") {
         root <- root()
 
         if (
-            !is.null(resource_path) &&
-            requireNamespace("V8", quietly = TRUE)
+            !is.null(resource_path)
         ) {
             static_path <- compile_styles(resource_path)
         }

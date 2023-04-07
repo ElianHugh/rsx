@@ -12,8 +12,8 @@ RoxygenNote: 7.2.1.9000
 Imports:
     cli,
     htmltools,
-    shiny,
-    V8
+    sass,
+    shiny
 Suggests:
     covr,
     knitr,
