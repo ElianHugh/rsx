@@ -2,14 +2,16 @@ test_that("styles validation", {
     reset_rsx_env()
     expect_no_error(
         component(
-            styles = "a {}"
+            styles = function() {
+                "a {}"
+            }
         )
     )
     expect_error(
         component(
-            styles = list(
-                bad = ""
-            )
+            styles = function() {
+                1L
+            }
         )
     )
     expect_error(
@@ -27,7 +29,9 @@ test_that("scoped styles", {
     reset_rsx_env()
 
     x <- component(
-        styles = ""
+        styles = function() {
+            ""
+        }
     )
 
     expect_no_error(print(x()))
@@ -39,7 +43,9 @@ test_that("scoped styles", {
         template = function(ns) {
             shiny::div()
         },
-        styles = "* { color: red }"
+        styles = function() {
+            "* { color: red }"
+        }
     )
 
     expect_identical(
@@ -65,9 +71,9 @@ test_that("sass", {
                 )
             )
         },
-        styles = "
-            div { color: red }
-        "
+        styles = function() {
+            "div { color: red }"
+        }
     )
     wide_tag <- wide()
     expect_identical(
@@ -90,7 +96,9 @@ test_that("styles should be overwritten with same-named components", {
         reset_rsx_env()
         x <- component(
             name = "foo",
-            styles = "a {color: red;}"
+            styles = function() {
+                "a {color: red;}"
+            }
         )()
         styles <- aggregate_styles()
         expect_true(grepl("color: red", styles))
@@ -98,7 +106,9 @@ test_that("styles should be overwritten with same-named components", {
         # overwrite
         x <- component(
             name = "foo",
-            styles = "a {color: blue;}"
+            styles = function() {
+                "a {color: blue;}"
+            }
         )()
         styles <- aggregate_styles()
         expect_false(grepl("color: red", styles))
@@ -116,7 +126,9 @@ test_that("styles are compiled for each used component", {
     )
     comp2 <- component(
         name = "comp2",
-        styles = "* { color: blue }"
+        styles = function() {
+            "* { color: blue }"
+        }
     )
     comp1()
     expect_true(grepl("color: blue", aggregate_styles()))

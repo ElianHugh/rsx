@@ -5,7 +5,7 @@
 \title{Create a component}
 \usage{
 component(
-  name = sprintf("unnamed_component-\%s", random_id()),
+  name = sprintf("component-\%s", random_id()),
   data = NULL,
   methods = NULL,
   template = NULL,
@@ -21,7 +21,7 @@ component(
 
 \item{template}{function that returns a taglist}
 
-\item{styles}{character vector of CSS styles that are scoped to the component}
+\item{styles}{function that returns a character vector or list of CSS styles that are scoped to the component}
 }
 \description{
 Components represent the encapsulation of a shiny module's

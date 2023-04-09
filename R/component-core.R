@@ -12,7 +12,7 @@
 #' @param data a function that returns a named list of values, which are used to store the component's state
 #' @param methods named list of functions, which define the behavior of the component
 #' @param template function that returns a taglist
-#' @param styles character vector of CSS styles that are scoped to the component
+#' @param styles function that returns a character vector or list of CSS styles that are scoped to the component
 #'
 #' @examples
 #' library(shiny)
@@ -55,7 +55,7 @@
 #' component-styles.R,
 #' component-template.R
 #' @export
-component <- function(name = sprintf("unnamed_component-%s", random_id()),
+component <- function(name = sprintf("component-%s", random_id()),
                       data = NULL,
                       methods = NULL,
                       template = NULL,
