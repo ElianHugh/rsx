@@ -4,14 +4,16 @@
 \alias{component-styles}
 \title{Component Styles}
 \description{
-The styles argument is a character vector of length 1 that defines the styles for the component.
+The styles argument is function that returns a character vector or list that defines the styles for the component.
 Styles are scoped to the component.
 }
 \details{
 The styles argument takes a character vector of length 1 that defines the styles for the component.
 For example:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{styles = "a \{ color: red; \}"
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{styles = function() \{
+"a \{ color: red; \}"
+\}
 }\if{html}{\out{</div>}}
 
 This would define the CSS styles for the anchor elements (\verb{<a>}) in the component, setting their color to red.
