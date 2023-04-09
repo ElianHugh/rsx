@@ -15,17 +15,6 @@ error_illegal_subset <- function() {
 
 # ~ Component errors ~~~
 
-error_component_invalid_styles  <- function() {
-    msg <- c(
-        "<rsx::component> object is invalid:",
-        "- Component styles argument must be a named list of scoped and/or global elements"
-    )
-    stop(
-        paste(msg, collapse = "\n"),
-        call. = FALSE
-    )
-}
-
 error_component_validation <- function(msg) {
     msg <- c(
         "<rsx::component> object is invalid:",
