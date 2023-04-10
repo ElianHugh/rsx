@@ -28,10 +28,20 @@ NULL
 
 
 new_styles_property <- function(style_fun, hash) {
+    msg <- validate_styles_precompile(style_fun)
+    if (!is.null(msg) && nzchar(msg)) {
+        error_component_validation(msg)
+    }
     if (!is.null(style_fun) && is.function(style_fun)) {
         generate_scoped_sass(style_fun, hash)
     } else {
         NULL
+    }
+}
+
+validate_styles_precompile <- function(styles) {
+    if (!is.null(styles) && !is.function(styles)) {
+        return("- $styles must be a function that returns a character vector or list")
     }
 }
 
