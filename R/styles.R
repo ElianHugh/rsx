@@ -15,9 +15,9 @@ compile_styles <- function(static_path = NULL) {
             sass::sass(
                 res,
                 sass::sass_options(
-                    output_style = "compressed",
-                    output_path = path
-                )
+                    output_style = "compressed"
+                ),
+                output = path
             )
         }
     }

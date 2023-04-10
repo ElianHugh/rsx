@@ -15,17 +15,6 @@ error_illegal_subset <- function() {
 
 # ~ Component errors ~~~
 
-error_component_invalid_styles  <- function() {
-    msg <- c(
-        "<rsx::component> object is invalid:",
-        "- Component styles argument must be a named list of scoped and/or global elements"
-    )
-    stop(
-        paste(msg, collapse = "\n"),
-        call. = FALSE
-    )
-}
-
 error_component_validation <- function(msg) {
     msg <- c(
         "<rsx::component> object is invalid:",
@@ -97,6 +86,18 @@ error_instance_slot <- function(instance_object) {
         instance_invalid_txt(instance_object),
         "- Cannot supply further content to component template",
         "- A <slot> element specified in the component's template is required."
+    )
+    stop(
+        paste(msg, collapse = "\n"),
+        call. = FALSE
+    )
+}
+
+error_instance_slot_name <- function(instance_object, nm) {
+    msg <- c(
+        instance_invalid_txt(instance_object),
+        "- Cannot supply further content to component template",
+        sprintf("- There is no <slot> element with name `%s` specified in the template.", nm)
     )
     stop(
         paste(msg, collapse = "\n"),

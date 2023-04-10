@@ -44,7 +44,7 @@ Slots are placeholder elements that tell {rsx} where tags should be placed.
 )
 
 print(x(shiny::p("foo")))
-#> <rsx::instance> `component-ND105723ba`
+#> <rsx::instance> `component-MJ84048bh`
 #> <p>foo</p>
 #> <p>bar</p>
 }\if{html}{\out{</div>}}
@@ -61,7 +61,7 @@ slot isn't filled -- this is typically called "fallback" content.
 )
 
 print(x())
-#> <rsx::instance> `component-KS81664hf`
+#> <rsx::instance> `component-CK95819xw`
 }\if{html}{\out{</div>}}
 \subsection{Named Slots}{
 
@@ -77,7 +77,7 @@ can be used to target specific areas of the template.
     \}
 )
 print(x(shiny::p("bar", slot = "b"), shiny::p("foo", slot = "a")))
-#> <rsx::instance> `component-ZU105930po`
+#> <rsx::instance> `component-QN78403hf`
 #> <p>foo</p>
 #> <p>bar</p>
 }\if{html}{\out{</div>}}

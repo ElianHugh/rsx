@@ -18,10 +18,6 @@ new_tag_function <- function(instance_object, template) {
 }
 
 template_tag <- function(instance_object, template, contents, .noWS = NULL) {
-    if (shiny::isRunning()) {
-        error_component_runtime(instance_object)
-    }
-
     tag <- htmltools::tag(
         instance_object$component$name,
         varArgs = contents,
@@ -108,95 +104,96 @@ add_scoping <- function(tag, i, args) {
 }
 
 manage_slots <- function(element, children, instance_object) {
-    template_query <- htmltools::tagQuery(
-        wrap_tags(element)
-    )
+    template_query <- wrapped_query(element)
+    child_query <- wrapped_query(children)
 
-    child_query <- htmltools::tagQuery(
-        wrap_tags(children)
-    )
+    compare_slots(template_query, child_query, instance_object)
 
     # unnamed children
-    unnamed_query <- child_query$
-        children("*")$
-        filter(function(x, i) {
-        is.null(x[["attribs"]][["slot"]])
-    })
+    unnamed_query <- child_query |>
+        q_filter_all(
+            function(x, i) {
+                is.null(x[["attribs"]][["slot"]])
+            }
+        )
 
-    unnamed_tags <- unnamed_query$selectedTags()
-    unnamed_query$remove()
-    template_query$find("slot")$
-        filter(
-        function(x, i) {
-            is.null(x$attribs[["name"]])
-        }
-    )$replaceWith(unnamed_tags)$
-        resetSelected()
+    unnamed_tags <- q_selected(unnamed_query)
+    q_drop(unnamed_query)
 
-    named_query <- child_query$
-        children("*")$
-        filter(function(x, i) {
-        !is.null(x[["attribs"]][["slot"]])
-    })
+    template_query |>
+        q_filter("slot") |>
+        q_filter(function(x, i) {
+                is.null(x$attribs[["name"]])
+            }
+        ) |>
+        q_replace(unnamed_tags) |>
+        q_reset()
 
-    named_tags <- named_query$selectedTags()
-    named_query$remove()
+    named_query <- child_query |>
+        q_filter_all(function(x, i) {
+            !is.null(x[["attribs"]][["slot"]])
+        })
+
+    named_tags <- q_selected(named_query)
+    q_drop(named_query)
 
     # named children
     for (child in named_tags) {
         insert_child <- child
         insert_child$attribs$slot <- NULL
-        template_query$find("slot")$
-            filter(
-            function(x, i) {
+        res <- template_query |>
+            q_filter("slot") |>
+            q_filter(function(x, i) {
                 identical(child$attribs$slot, x$attribs$name)
-            }
-        )$replaceWith(insert_child)$resetSelected()
-    }
-
-    template_query$
-        find("slot")$
-        each(function(x, i) {
-        if (length(x$children) > 0L) {
-            get_index <- function(parent) {
-                vapply(parent$children, function(child) {
-                    identical(child$envKey, x$envKey)
-                }, logical(1L)) |>
-                    which()
-            }
-            index <- get_index(x$parent)
-            x$parent$children <- append(
-                x$parent$children,
-                x$children,
-                index
+            })
+        if (q_length(res) > 0L) {
+            res |>
+                q_replace(insert_child) |>
+                q_reset()
+        } else {
+            error_instance_slot_name(
+                instance_object,
+                child$attribs$slot
             )
         }
-        x
-    })$resetSelected()$
-        find("slot")$
-        remove()
+    }
 
+    template_query |>
+        q_filter("slot") |>
+        q_map(function(x, i) {
+            if (length(x$children) > 0L) {
+                get_index <- function(parent) {
+                    vapply(parent$children, function(child) {
+                        identical(child$envKey, x$envKey)
+                    }, logical(1L)) |>
+                        which()
+                }
+                index <- get_index(x$parent)
+                x$parent$children <- append(
+                    x$parent$children,
+                    x$children,
+                    index
+                )
+            }
+            x
+        }) |>
+        q_reset() |>
+        q_filter("slot") |>
+        q_drop()
 
-    unwrap_tags(
-        template_query
-    )
+    unwrap_tags(template_query)
 }
 
-wrap_tags <- function(x) {
-    if (!inherits(x, "shiny.tag") || !identical(x$name, "template")) {
-        shiny::tags$template(x)
-    } else {
-        x
-    }
-}
+compare_slots <- function(tq, cq, instance_object) {
+    tq_len <- tq |>
+        q_filter("slot") |>
+        q_length()
 
-unwrap_tags <- function(x) {
-    if (inherits(x, "shiny.tag.query")) {
-        x <- x$allTags()
-    }
-    if (inherits(x, "shiny.tag") && identical(x$name, "template")) {
-        x$children
-    } else {
-        x
+    cq_len <- cq |>
+        q_filter("*") |>
+        q_length()
+
+    if (cq_len > 0L && tq_len == 0L) {
+        error_instance_slot(instance_object)
     }
 }
