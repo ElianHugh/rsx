@@ -28,7 +28,7 @@ NULL
 
 
 new_styles_property <- function(style_fun, hash) {
-    if (!is.null(style_fun)) {
+    if (!is.null(style_fun) && is.function(style_fun)) {
         generate_scoped_sass(style_fun, hash)
     } else {
         NULL
