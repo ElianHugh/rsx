@@ -93,6 +93,18 @@ error_instance_slot <- function(instance_object) {
     )
 }
 
+error_instance_slot_name <- function(instance_object, nm) {
+    msg <- c(
+        instance_invalid_txt(instance_object),
+        "- Cannot supply further content to component template",
+        sprintf("- There is no <slot> element with name `%s` specified in the template.", nm)
+    )
+    stop(
+        paste(msg, collapse = "\n"),
+        call. = FALSE
+    )
+}
+
 error_instance_assignment <- function(instance_object, assigned_name) {
     msg <- c(
         sprintf(

@@ -42,6 +42,10 @@ test_that(
 
 test_that("slotting", {
     reset_rsx_env()
+    x <- component()
+    expect_error(print(x(shiny::div())))
+
+    reset_rsx_env()
     x <- component(
         template = function(ns) {
             shiny::tagList(
@@ -127,6 +131,7 @@ test_that("slotting", {
             )
         )
     )
+
 })
 
 test_that("nesting", {
