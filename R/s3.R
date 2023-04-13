@@ -1,12 +1,17 @@
 #' @export
 `[.component` <- function(x, arg) {
-    attributes(x)[names(x)][arg]
+    error_illegal_subset()
 }
 
 #' @export
 `[[.component` <- function(x, arg) {
-    attributes(x)[names(x)][[arg]]
+    if (arg %in% names(x)) {
+        attributes(x)[names(x)][[arg]]
+    } else {
+        error_unknown_subset(arg)
+    }
 }
+
 
 #' @export
 `$.component` <- `[[.component`
@@ -19,12 +24,17 @@
 
 #' @export
 `[[<-.component` <- function(x, arg, value) {
-    attr(x, arg) <- value
-    msg <- validate_component(x)
-    if (!is.null(msg)) {
-        error_component_validation(msg)
+    if (arg %in% names(x)) {
+        attr(x, arg) <- value
+        msg <- validate_component(x)
+        if (!is.null(msg)) {
+            error_component_validation(msg)
+        }
+        x
+    } else {
+        error_unknown_subset(arg)
     }
-    x
+
 }
 
 #' @export
