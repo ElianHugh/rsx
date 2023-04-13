@@ -117,6 +117,7 @@ test_that("subsetting", {
     x <- component()
     expect_error(x["temp"])
     expect_error(x[["temp"]])
+    expect_no_error(x[["template"]])
     expect_error(x["temp"] <- 5L)
     expect_error(x[["temp"]] <- 5L)
     expect_no_error(
