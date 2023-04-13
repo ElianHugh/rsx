@@ -13,6 +13,13 @@ error_illegal_subset <- function() {
     )
 }
 
+error_unknown_subset <- function(x) {
+    stop(
+        sprintf("{rsx} components do not have a `%s` property", x),
+        call. = FALSE
+    )
+}
+
 # ~ Component errors ~~~
 
 error_component_validation <- function(msg) {

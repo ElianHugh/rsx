@@ -89,3 +89,40 @@ test_that(
         expect_no_error(print(comps[[1L]]()))
     }
 )
+
+test_that("namespace is appropriately setup", {
+    ns <- asNamespace("rsx")
+    ns[["rsx_env"]] |>
+        is.environment() |>
+        expect_true()
+
+    ns[["rsx_env"]][["components"]] |>
+        is.list() |>
+        expect_true()
+
+    ns[["rsx_env"]][["instances"]] |>
+        is.list() |>
+        expect_true()
+})
+
+test_that("is.x", {
+    reset_rsx_env()
+    x <- component()
+    expect_true(is.component(x))
+    expect_true(is.instance_tag(x()))
+})
+
+test_that("subsetting", {
+    reset_rsx_env()
+    x <- component()
+    expect_error(x["temp"])
+    expect_error(x[["temp"]])
+    expect_no_error(x[["template"]])
+    expect_error(x["temp"] <- 5L)
+    expect_error(x[["temp"]] <- 5L)
+    expect_no_error(
+        x[["template"]] <- function(ns) {
+            shiny::div()
+        }
+    )
+})

@@ -48,6 +48,14 @@ test_that("slotting", {
     reset_rsx_env()
     x <- component(
         template = function(ns) {
+            shiny::tags$slot(name = "a")
+        }
+    )
+    expect_error(print(x(shiny::div(slot="u"))))
+
+    reset_rsx_env()
+    x <- component(
+        template = function(ns) {
             shiny::tagList(
                 shiny::tags$slot(),
                 shiny::tags$slot(name = "a")
