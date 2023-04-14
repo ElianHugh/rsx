@@ -22,11 +22,6 @@ test_that("methods validation", {
             })
         )()
     )
-})
-
-test_that("self validation", {
-    reset_rsx_env()
-
     # name duplication
     expect_error(
         component(
@@ -44,11 +39,12 @@ test_that("self validation", {
     )
 })
 
+
 test_that(
     "method self access",
     {
         reset_rsx_env()
-        comp <- component(
+        c_method_self <- component(
             data = function() {
                 list(
                     bar = "bar"
@@ -62,8 +58,7 @@ test_that(
                     shiny::p(self$bar)
                 }
             )
-        )
-        comp()
+        )()
         inst <- get_instances()[[1L]]
         self <- inst$internal$self
 

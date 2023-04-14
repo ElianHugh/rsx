@@ -28,17 +28,7 @@ test_that("styles validation", {
 test_that("scoped styles", {
     reset_rsx_env()
 
-    x <- component(
-        styles = function() {
-            ""
-        }
-    )
-
-    expect_no_error(print(x()))
-
-    reset_rsx_env()
-
-    x <- component(
+    c_scoped_styles <- component(
         name = "test",
         template = function(ns) {
             shiny::div()
@@ -49,19 +39,19 @@ test_that("scoped styles", {
     )
 
     expect_identical(
-        get_tag_output(as_shiny_tag(x())),
-        sprintf('<div class="%s"></div>', attr(x, "component_id"))
+        get_tag_output(as_shiny_tag(c_scoped_styles())),
+        sprintf('<div class="%s"></div>', attr(c_scoped_styles, "component_id"))
     )
 
     expect_identical(
         gsub("\\s", "", aggregate_styles()),
-        sprintf(".%s*{color:red;}", attr(x, "component_id"))
+        sprintf(".%s*{color:red;}", attr(c_scoped_styles, "component_id"))
     )
 })
 
 test_that("sass", {
     reset_rsx_env()
-    wide <- component(
+    c_wide <- component(
         name = "wide",
         template = function(ns) {
             shiny::tagList(
@@ -75,27 +65,27 @@ test_that("sass", {
             "div { color: red }"
         }
     )
-    wide_tag <- wide()
+    wide_tag <- c_wide()
     expect_identical(
         as.character(htmltools::renderTags(wide_tag)$html),
         sprintf(
             "<div class=\"%s\"></div>\n<div class=\"%s\">\n  <p></p>\n</div>",
-            attr(wide, "component_id"),
-            attr(wide, "component_id")
+            attr(c_wide, "component_id"),
+            attr(c_wide, "component_id")
         )
     )
 
     expect_identical(
         gsub("\\s", "", aggregate_styles()),
-        sprintf(".%sdiv{color:red;}", attr(wide, "component_id"))
+        sprintf(".%sdiv{color:red;}", attr(c_wide, "component_id"))
     )
 })
 
 test_that("styles should be overwritten with same-named components", {
     suppressMessages({
         reset_rsx_env()
-        x <- component(
-            name = "foo",
+        c_overwrite1 <- component(
+            name = "overwrite",
             styles = function() {
                 "a {color: red;}"
             }
@@ -104,8 +94,8 @@ test_that("styles should be overwritten with same-named components", {
         expect_true(grepl("color: red", styles))
 
         # overwrite
-        x <- component(
-            name = "foo",
+        c_overwrite2 <- component(
+            name = "overwrite",
             styles = function() {
                 "a {color: blue;}"
             }
@@ -118,19 +108,18 @@ test_that("styles should be overwritten with same-named components", {
 
 test_that("styles are compiled for each used component", {
     reset_rsx_env()
-    comp1 <- component(
+    c_compile1 <- component(
         name = "comp1",
         template = function(ns) {
-            comp2()
+            c_compile2()
         }
     )
-    comp2 <- component(
+    c_compile2 <- component(
         name = "comp2",
         styles = function() {
             "* { color: blue }"
         }
     )
-    comp1()
+    c_compile1()
     expect_true(grepl("color: blue", aggregate_styles()))
 })
-

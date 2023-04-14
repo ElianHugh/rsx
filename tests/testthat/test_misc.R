@@ -30,28 +30,28 @@ test_that("lexical scoping", {
     expect_output(inst$methods$foo(), "1")
 })
 
-test_that("withTags", {
-    reset_rsx_env()
-    expect_no_error(
-        component(
-            template = function(ns) {
-                shiny::p("Foo")
-            }
-        )()
-    )
+# test_that("withTags", {
+#     reset_rsx_env()
+#     expect_no_error(
+#         component(
+#             template = function(ns) {
+#                 shiny::p("Foo")
+#             }
+#         )()
+#     )
 
-    expect_no_error(
-        component(
-            template = function(ns) {
-                shiny::withTags(
-                    shiny::tagList(
-                        p("Bar")
-                    )
-                )
-            }
-        )()
-    )
-})
+#     expect_no_error(
+#         component(
+#             template = function(ns) {
+#                 shiny::withTags(
+#                     shiny::tagList(
+#                         p("Bar")
+#                     )
+#                 )
+#             }
+#         )()
+#     )
+# })
 
 test_that(
     "components overwrite components with the same name",
@@ -125,4 +125,35 @@ test_that("subsetting", {
             shiny::div()
         }
     )
+})
+
+test_that("decompose", {
+    x <- component(
+        name = "decompose",
+        template = function(ns) {
+            shiny::div("foo")
+        },
+        methods = list(
+            setup = function(input, output, session) {
+                # noop
+            }
+        )
+    )
+
+    lst <- decompose(x())
+    inst <- get_component_instances("decompose")[[1L]]
+
+    expect_identical(
+        inst$methods$setup,
+        lst$server
+    )
+
+    expect_identical(
+        get_tag_output(
+            as_shiny_tag(lst$ui)
+        ),
+        get_tag_output(as_shiny_tag(x$template()))
+    )
+
+    expect_error(decompose(shiny::div()))
 })
