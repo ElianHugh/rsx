@@ -217,4 +217,12 @@ test_that("components with top-level nodes can be passed attributes", {
         )
     )
 
+    reset_rsx_env()
+    x <- component(
+        template = function(ns) {
+            "test"
+        }
+    )
+    expect_no_error(as.character(x()))
+
 })

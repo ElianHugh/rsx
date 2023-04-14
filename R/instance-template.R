@@ -44,6 +44,20 @@ template_tag <- function(instance_object, template, contents, .noWS = NULL) {
         },
         instance_object$methods[["render"]] %||% NULL,
         function(element) {
+            if (length(element$children) == 1L &&
+                inherits(element$children[[1L]], "shiny.tag")) {
+                attribs <- manage_attributes(contents)
+                element$children <- do.call(
+                    htmltools::tagAppendAttributes,
+                    args = c(
+                        tag = element$children,
+                        attribs
+                    )
+                )
+            }
+            element
+        },
+        function(element) {
             element$children
         }
     )
@@ -196,4 +210,12 @@ compare_slots <- function(tq, cq, instance_object) {
     if (cq_len > 0L && tq_len == 0L) {
         error_instance_slot(instance_object)
     }
+}
+
+manage_attributes <- function(contents) {
+    lapply(contents, function(x) {
+        if (!is.instance_tag(x)) {
+            x
+        }
+    })
 }
