@@ -41,14 +41,14 @@ new_styles_property <- function(style_fun, hash) {
 
 validate_styles_precompile <- function(styles) {
     if (!is.null(styles) && !is.function(styles)) {
-        return("- $styles must be a function that returns a character vector or list")
+        return("$styles must be a function that returns a character vector or list")
     }
 }
 
 validate_styles_property <- function(styles) {
     if (!is.null(styles)) {
         if (!is.character(styles)) {
-            return("- $styles must be a function that returns a character vector or list")
+            return("$styles must be a function that returns a character vector or list")
         }
     }
 }

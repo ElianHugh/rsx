@@ -133,3 +133,4 @@ test_that("styles are compiled for each used component", {
     comp1()
     expect_true(grepl("color: blue", aggregate_styles()))
 })
+

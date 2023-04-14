@@ -12,6 +12,7 @@ RoxygenNote: 7.2.1.9000
 Imports:
     cli,
     htmltools,
+    rlang,
     sass,
     shiny
 Suggests:

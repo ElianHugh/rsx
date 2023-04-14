@@ -83,11 +83,11 @@ new_data_property <- function(dat) {
 validate_data_property <- function(data) {
     if (!is.null(data)) {
         if (!is.function(data)) {
-            return("- $data must be a function")
+            return("$data must be a function")
         }
 
         if (!assert_no_argument(data)) {
-            return("- $data function cannot take arguments")
+            return("$data function cannot take arguments")
         }
     }
 }

@@ -5,13 +5,13 @@
 
 #' @export
 `[[.component` <- function(x, arg) {
-    if (arg %in% names(x)) {
-        attributes(x)[names(x)][[arg]]
+    nms <- c(names(x), ".namespace", "component_id")
+    if (arg %in% nms) {
+        attributes(x)[nms][[arg]]
     } else {
         error_unknown_subset(arg)
     }
 }
-
 
 #' @export
 `$.component` <- `[[.component`
@@ -20,7 +20,6 @@
 `[<-.component` <- function(x, arg, value) {
     error_illegal_subset()
 }
-
 
 #' @export
 `[[<-.component` <- function(x, arg, value) {
@@ -94,7 +93,7 @@ format.component <- function(x, ...) {
     namespace <- {
         ns <- x$.namespace
         if (!is.null(ns)) {
-            sprintf("Namespace: %s", ns)
+            sprintf("Namespace: %s", rlang::env_label(ns))
         } else {
             NULL
         }

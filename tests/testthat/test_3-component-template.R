@@ -184,7 +184,37 @@ test_that("nesting", {
             )
         )
     )
+})
 
+test_that("components with top-level nodes can be passed attributes", {
+    reset_rsx_env()
+    x <- component(
+        template = function(ns) {
+            shiny::div()
+        }
+    )
+    expect_identical(
+        get_tag_output(as_shiny_tag(x(class = "foo"))),
+        get_tag_output(shiny::div(class = "foo"))
+    )
 
-    #
+    reset_rsx_env()
+    x <- component(
+        template = function(ns) {
+            shiny::tagList(
+                shiny::div(),
+                shiny::div()
+            )
+        }
+    )
+    expect_identical(
+        get_tag_output(as_shiny_tag(x(class = "foo"))),
+        get_tag_output(
+            shiny::tagList(
+                shiny::div(),
+                shiny::div()
+            )
+        )
+    )
+
 })
