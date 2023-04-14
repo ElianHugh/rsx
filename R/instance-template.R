@@ -214,7 +214,7 @@ compare_slots <- function(tq, cq, instance_object) {
 
 manage_attributes <- function(contents) {
     lapply(contents, function(x) {
-        if (!is.instance_tag(x)) {
+        if (!inherits(x, "shiny.tag")) {
             x
         }
     })
