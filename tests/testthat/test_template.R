@@ -111,7 +111,7 @@ test_that("templates can use basic slotting", {
     expect_identical(
         as.character(c_unnamed_slotting(shiny::p("bar"))),
         as.character(
-            shiny::div(shiny::div("foo"), shiny::div("bar"))
+            shiny::div(shiny::div("foo"), shiny::p("bar"))
         )
     )
 
