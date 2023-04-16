@@ -176,7 +176,7 @@ manage_slots <- function(element, children, instance_object) {
         }
     }
 
-    #' slot fallback content
+    # slot fallback content
     template_query |>
         q_filter("slot") |>
         q_map(function(x, i) {
