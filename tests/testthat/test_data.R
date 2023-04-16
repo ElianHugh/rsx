@@ -44,3 +44,19 @@ test_that("can pass data to instances", {
     )
     expect_identical(get_instances()[[1L]]$data$dat, 2L)
 })
+
+test_that("can't pass invalid data to instances", {
+    reset_rsx_env()
+    c_bad_data <- component(
+        data = function() {
+            list(
+                dat = 1L
+            )
+        }
+    )
+    expect_error(
+        c_bad_data(
+            data = list(bad = "bad")
+        )
+    )
+})

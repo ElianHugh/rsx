@@ -134,14 +134,18 @@ manage_slots <- function(element, children, instance_object) {
     unnamed_tags <- q_selected(unnamed_query)
     q_drop(unnamed_query)
 
-    template_query |>
-        q_filter("slot") |>
-        q_filter(function(x, i) {
-                is.null(x$attribs[["name"]])
-            }
-        ) |>
-        q_replace(unnamed_tags) |>
-        q_reset()
+
+    # unnamed children replacement
+    if (q_length(unnamed_query) > 0L) {
+        template_query |>
+            q_filter("slot") |>
+            q_filter(function(x, i) {
+                    is.null(x$attribs[["name"]])
+                }
+            ) |>
+            q_replace(unnamed_tags) |>
+            q_reset()
+    }
 
     named_query <- child_query |>
         q_filter_all(function(x, i) {
@@ -151,7 +155,7 @@ manage_slots <- function(element, children, instance_object) {
     named_tags <- q_selected(named_query)
     q_drop(named_query)
 
-    # named children
+    # named children replacement
     for (child in named_tags) {
         insert_child <- child
         insert_child$attribs$slot <- NULL
@@ -172,6 +176,7 @@ manage_slots <- function(element, children, instance_object) {
         }
     }
 
+    #' slot fallback content
     template_query |>
         q_filter("slot") |>
         q_map(function(x, i) {

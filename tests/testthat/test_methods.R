@@ -17,9 +17,11 @@ test_that("methods validation", {
     )
     expect_error(
         component(
-            methods = list(function() {
-                "bad"
-            })
+            methods = list(
+                function() {
+                    "bad"
+                }
+            )
         )()
     )
     # name duplication
