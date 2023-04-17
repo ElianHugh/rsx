@@ -30,29 +30,6 @@ test_that("lexical scoping", {
     expect_output(inst$methods$foo(), "1")
 })
 
-test_that("withTags", {
-    reset_rsx_env()
-    expect_no_error(
-        component(
-            template = function(ns) {
-                shiny::p("Foo")
-            }
-        )()
-    )
-
-    expect_no_error(
-        component(
-            template = function(ns) {
-                shiny::withTags(
-                    shiny::tagList(
-                        p("Bar")
-                    )
-                )
-            }
-        )()
-    )
-})
-
 test_that(
     "components overwrite components with the same name",
     {
@@ -115,14 +92,73 @@ test_that("is.x", {
 test_that("subsetting", {
     reset_rsx_env()
     x <- component()
-    expect_error(x["temp"])
-    expect_error(x[["temp"]])
-    expect_no_error(x[["template"]])
-    expect_error(x["temp"] <- 5L)
-    expect_error(x[["temp"]] <- 5L)
+    expect_error(
+        x["temp"],
+        class = new_rsx_error("illegal_subset")
+    )
+    expect_error(
+        x[["temp"]],
+        class = new_rsx_error("unknown_subset")
+    )
+    expect_no_error(
+        x[["template"]]
+    )
+    expect_error(
+        x["temp"] <- 5L,
+        class = new_rsx_error("illegal_subset")
+    )
+    expect_error(
+        x[["temp"]] <- 5L,
+        class = new_rsx_error("unknown_subset")
+    )
     expect_no_error(
         x[["template"]] <- function(ns) {
             shiny::div()
         }
     )
+})
+
+test_that("decompose", {
+    x <- component(
+        name = "decompose",
+        template = function(ns) {
+            shiny::div("foo")
+        },
+        methods = list(
+            setup = function(input, output, session) {
+                # noop
+            }
+        )
+    )
+
+    lst <- decompose(x())
+    inst <- get_component_instances("decompose")[[1L]]
+
+    expect_identical(
+        inst$methods$setup,
+        lst$server
+    )
+
+    expect_identical(
+        get_tag_output(
+            as_shiny_tag(lst$ui)
+        ),
+        get_tag_output(as_shiny_tag(x$template()))
+    )
+
+    expect_error(decompose(shiny::div()))
+})
+
+test_that("cannot modify instances", {
+    reset_rsx_env()
+    c_no_modify <- component(
+        data = function() {
+            list(
+                test = "test"
+            )
+        }
+    )
+    inst <- c_no_modify() |>
+        attr("instance")
+    expect_error(inst$data$test <- "error")
 })

@@ -74,7 +74,7 @@ new_methods_property <- function(methods) {
 validate_methods_property <- function(methods) {
     if (!is.null(methods)) {
         if (!is.list(methods)) {
-            return("- $methods must be a list")
+            return("$methods must be a list")
         }
 
         for (i in seq_along(methods)) {
@@ -82,11 +82,11 @@ validate_methods_property <- function(methods) {
             fn_name <- names(methods)[i]
             if (!is.function(fn)) {
                 return(
-                    "- Each method member must be a function"
+                    "Each method member must be a function"
                 )
             } else if (assert_self_argument(fn)) {
                 return(
-                    "- `self` is a reserved word in {rsx} methods."
+                    "`self` is a reserved word in {rsx} methods."
                 )
             }
         }

@@ -44,6 +44,20 @@ template_tag <- function(instance_object, template, contents, .noWS = NULL) {
         },
         instance_object$methods[["render"]] %||% NULL,
         function(element) {
+            if (length(element$children) == 1L &&
+                inherits(element$children[[1L]], "shiny.tag")) {
+                attribs <- manage_attributes(contents)
+                element$children <- do.call(
+                    htmltools::tagAppendAttributes,
+                    args = c(
+                        tag = element$children,
+                        attribs
+                    )
+                )
+            }
+            element
+        },
+        function(element) {
             element$children
         }
     )
@@ -120,14 +134,18 @@ manage_slots <- function(element, children, instance_object) {
     unnamed_tags <- q_selected(unnamed_query)
     q_drop(unnamed_query)
 
-    template_query |>
-        q_filter("slot") |>
-        q_filter(function(x, i) {
-                is.null(x$attribs[["name"]])
-            }
-        ) |>
-        q_replace(unnamed_tags) |>
-        q_reset()
+
+    # unnamed children replacement
+    if (q_length(unnamed_query) > 0L) {
+        template_query |>
+            q_filter("slot") |>
+            q_filter(function(x, i) {
+                    is.null(x$attribs[["name"]])
+                }
+            ) |>
+            q_replace(unnamed_tags) |>
+            q_reset()
+    }
 
     named_query <- child_query |>
         q_filter_all(function(x, i) {
@@ -137,7 +155,7 @@ manage_slots <- function(element, children, instance_object) {
     named_tags <- q_selected(named_query)
     q_drop(named_query)
 
-    # named children
+    # named children replacement
     for (child in named_tags) {
         insert_child <- child
         insert_child$attribs$slot <- NULL
@@ -158,6 +176,7 @@ manage_slots <- function(element, children, instance_object) {
         }
     }
 
+    # slot fallback content
     template_query |>
         q_filter("slot") |>
         q_map(function(x, i) {
@@ -196,4 +215,12 @@ compare_slots <- function(tq, cq, instance_object) {
     if (cq_len > 0L && tq_len == 0L) {
         error_instance_slot(instance_object)
     }
+}
+
+manage_attributes <- function(contents) {
+    lapply(contents, function(x) {
+        if (!inherits(x, "shiny.tag")) {
+            x
+        }
+    })
 }

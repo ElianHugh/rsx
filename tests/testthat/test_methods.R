@@ -1,10 +1,12 @@
 test_that("methods validation", {
     reset_rsx_env()
     expect_error(
-        component(methods = "bad")
+        component(methods = "bad"),
+        class = new_rsx_error("component_validation")
     )
     expect_error(
-        component(methods = list("bad"))
+        component(methods = list("bad")),
+        class = new_rsx_error("component_validation")
     )
     expect_error(
         component(
@@ -13,20 +15,19 @@ test_that("methods validation", {
 
                 }
             )
-        )
+        ),
+        class = new_rsx_error("component_validation")
     )
     expect_error(
         component(
-            methods = list(function() {
-                "bad"
-            })
-        )()
+            methods = list(
+                function() {
+                    "bad"
+                }
+            )
+        )(),
+        class = new_rsx_error("instance_validation")
     )
-})
-
-test_that("self validation", {
-    reset_rsx_env()
-
     # name duplication
     expect_error(
         component(
@@ -40,15 +41,17 @@ test_that("self validation", {
 
                 }
             )
-        )()
+        )(),
+        class = new_rsx_error("instance_name")
     )
 })
+
 
 test_that(
     "method self access",
     {
         reset_rsx_env()
-        comp <- component(
+        c_method_self <- component(
             data = function() {
                 list(
                     bar = "bar"
@@ -62,8 +65,7 @@ test_that(
                     shiny::p(self$bar)
                 }
             )
-        )
-        comp()
+        )()
         inst <- get_instances()[[1L]]
         self <- inst$internal$self
 

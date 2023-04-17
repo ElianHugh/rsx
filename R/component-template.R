@@ -98,12 +98,12 @@ new_template_property <- function(template) {
 validate_template_property <- function(template) {
     if (!is.null(template)) {
         if (!is.function(template)) {
-            return("- $template must be a function")
+            return("$template must be a function")
         }
 
         if (!identical(names(formals(template)), "ns")) {
             return(
-                "- $template function must have one argument: `ns`"
+                "$template function must have one argument: `ns`"
             )
         }
     }
