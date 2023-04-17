@@ -1,8 +1,21 @@
 test_that("templates are validated", {
-    expect_error(component(template = "bad"))
-    expect_no_error(component(template = function(ns) {
+    expect_error(
+        component(template = "bad"),
+        class = new_rsx_error("component_validation")
+    )
+    expect_no_error(
+        component(template = function(ns) {
 
-    }))
+        })
+    )
+    expect_error(
+        component(
+            template = function(ns, bad) {
+
+            }
+        ),
+        class = new_rsx_error("component_validation")
+    )
 })
 
 test_that("templates output shiny tags", {
@@ -204,5 +217,36 @@ test_that("templates with top-level nodes can be passed attributes", {
             shiny::div(),
             shiny::div()
         ))
+    )
+})
+
+test_that("can't pass unnamed slots that don't exist", {
+    reset_rsx_env()
+    c_unnamed_slots <- component(
+        template = function(ns) {
+            shiny::div("no slot")
+        }
+    )
+    expect_error(
+        as.character(c_unnamed_slots(shiny::div())),
+        class = new_rsx_error("instance_slot")
+    )
+})
+
+
+test_that("can't pass named slots that don't exist", {
+    reset_rsx_env()
+    c_named_slots <- component(
+        template = function(ns) {
+            shiny::tags$slot(
+                name = "a"
+            )
+        }
+    )
+    expect_error(
+        as.character(
+            c_named_slots(shiny::div(slot = "b"))
+        ),
+        class = new_rsx_error("instance_slot_name")
     )
 })

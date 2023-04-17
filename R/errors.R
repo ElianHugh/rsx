@@ -109,7 +109,7 @@ error_instance_slot_name <- function(instance_object, nm) {
     )
     rlang::abort(
         msg,
-        class = new_rsx_error("instance_slot")
+        class = new_rsx_error("instance_slot_name")
     )
 }
 
