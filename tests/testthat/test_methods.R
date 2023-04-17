@@ -1,10 +1,12 @@
 test_that("methods validation", {
     reset_rsx_env()
     expect_error(
-        component(methods = "bad")
+        component(methods = "bad"),
+        class = new_rsx_error("component_validation")
     )
     expect_error(
-        component(methods = list("bad"))
+        component(methods = list("bad")),
+        class = new_rsx_error("component_validation")
     )
     expect_error(
         component(
@@ -13,7 +15,8 @@ test_that("methods validation", {
 
                 }
             )
-        )
+        ),
+        class = new_rsx_error("component_validation")
     )
     expect_error(
         component(
@@ -22,7 +25,8 @@ test_that("methods validation", {
                     "bad"
                 }
             )
-        )()
+        )(),
+        class = new_rsx_error("instance_validation")
     )
     # name duplication
     expect_error(
@@ -37,7 +41,8 @@ test_that("methods validation", {
 
                 }
             )
-        )()
+        )(),
+        class = new_rsx_error("instance_name")
     )
 })
 

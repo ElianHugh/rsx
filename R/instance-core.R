@@ -24,10 +24,6 @@
 #' @noRd
 instantiate <- function(comp) {
     this <- new_instance(comp)
-    msg <- validate_instance(this)
-    if (!is.null(msg)) {
-        error_instance_validation(msg, this$component)
-    }
     new_tag_function(this, this$template)
 }
 
@@ -45,6 +41,10 @@ new_instance <- function(comp) {
             inst_method_nms
         )
         error_instance_name_duplication(nms[duplicated(nms)], this)
+    }
+    msg <- validate_params(inst_data, inst_methods)
+    if (!is.null(msg)) {
+        error_instance_validation(msg, this[["component"]])
     }
 
     list2env(c(inst_data, inst_methods), this$internal$self)
@@ -92,11 +92,11 @@ create_env_bindings <- function(comp) {
     this
 }
 
-validate_instance <- function(self) {
-    if (length(names(self$data)) != length(self$data)) {
+validate_params <- function(dat, methods) {
+    if (length(names(dat)) != length(dat)) {
         return("$data must be a named list.")
     }
-    if (length(names(self$methods)) != length(self$methods)) {
+    if (length(names(methods)) != length(methods)) {
         return(
             "$methods must be a named list."
         )

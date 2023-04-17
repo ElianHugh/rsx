@@ -1,14 +1,16 @@
 test_that("data validation", {
     reset_rsx_env()
     # must be function
-    expect_error(component(data = "bad"))
+    expect_error(
+        component(data = "bad"),
+        class = new_rsx_error("component_validation")
+    )
     # no args
     expect_error(
         component(
-            data = function(bad) {
-
-            }
-        )
+            data = function(bad) {}
+        ),
+        class = new_rsx_error("component_validation")
     )
     # must return list
     expect_error(
@@ -16,7 +18,8 @@ test_that("data validation", {
             data = function() {
                 "bad"
             }
-        )()
+        )(),
+        class = new_rsx_error("instance_validation")
     )
     # must return *named* list
     expect_error(
@@ -24,7 +27,8 @@ test_that("data validation", {
             data = function() {
                 list("bad")
             }
-        )()
+        )(),
+        class = new_rsx_error("instance_validation")
     )
 })
 
@@ -57,6 +61,7 @@ test_that("can't pass invalid data to instances", {
     expect_error(
         c_bad_data(
             data = list(bad = "bad")
-        )
+        ),
+        class = new_rsx_error("instance_data")
     )
 })

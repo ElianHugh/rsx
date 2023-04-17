@@ -30,29 +30,6 @@ test_that("lexical scoping", {
     expect_output(inst$methods$foo(), "1")
 })
 
-# test_that("withTags", {
-#     reset_rsx_env()
-#     expect_no_error(
-#         component(
-#             template = function(ns) {
-#                 shiny::p("Foo")
-#             }
-#         )()
-#     )
-
-#     expect_no_error(
-#         component(
-#             template = function(ns) {
-#                 shiny::withTags(
-#                     shiny::tagList(
-#                         p("Bar")
-#                     )
-#                 )
-#             }
-#         )()
-#     )
-# })
-
 test_that(
     "components overwrite components with the same name",
     {
@@ -115,11 +92,25 @@ test_that("is.x", {
 test_that("subsetting", {
     reset_rsx_env()
     x <- component()
-    expect_error(x["temp"])
-    expect_error(x[["temp"]])
-    expect_no_error(x[["template"]])
-    expect_error(x["temp"] <- 5L)
-    expect_error(x[["temp"]] <- 5L)
+    expect_error(
+        x["temp"],
+        class = new_rsx_error("illegal_subset")
+    )
+    expect_error(
+        x[["temp"]],
+        class = new_rsx_error("unknown_subset")
+    )
+    expect_no_error(
+        x[["template"]]
+    )
+    expect_error(
+        x["temp"] <- 5L,
+        class = new_rsx_error("illegal_subset")
+    )
+    expect_error(
+        x[["temp"]] <- 5L,
+        class = new_rsx_error("unknown_subset")
+    )
     expect_no_error(
         x[["template"]] <- function(ns) {
             shiny::div()
@@ -156,4 +147,18 @@ test_that("decompose", {
     )
 
     expect_error(decompose(shiny::div()))
+})
+
+test_that("cannot modify instances", {
+    reset_rsx_env()
+    c_no_modify <- component(
+        data = function() {
+            list(
+                test = "test"
+            )
+        }
+    )
+    inst <- c_no_modify() |>
+        attr("instance")
+    expect_error(inst$data$test <- "error")
 })

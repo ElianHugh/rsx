@@ -21,7 +21,8 @@ test_that("styles validation", {
                 global = "",
                 bad = ""
             )
-        )
+        ),
+        class = new_rsx_error("component_validation")
     )
 })
 
