@@ -1,6 +1,6 @@
 test_that("rsx_app works as expected", {
-	reset_rsx_env()
-	expect_error(rsx_app("bad"))
+    reset_rsx_env()
+    expect_error(rsx_app("bad"))
 })
 
 test_that("rsx_ui adds styles to head", {

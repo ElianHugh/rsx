@@ -1,8 +1,21 @@
 test_that("templates are validated", {
-    expect_error(component(template = "bad"))
-    expect_no_error(component(template = function(ns) {
+    expect_error(
+        component(template = "bad"),
+        class = new_rsx_error("component_validation")
+    )
+    expect_no_error(
+        component(template = function(ns) {
 
-    }))
+        })
+    )
+    expect_error(
+        component(
+            template = function(ns, bad) {
+
+            }
+        ),
+        class = new_rsx_error("component_validation")
+    )
 })
 
 test_that("templates output shiny tags", {
