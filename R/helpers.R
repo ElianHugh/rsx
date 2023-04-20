@@ -59,6 +59,7 @@ get_instances <- function() {
 reset_rsx_env <- function() {
     rsx_env[["components"]] <- list()
     rsx_env[["instances"]] <- list()
+    rsx_env[["ns"]] <- NULL
 }
 
 set_fn_env <- function(fn, e) {

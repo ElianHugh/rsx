@@ -39,5 +39,4 @@ test_that("rsx_ui namespaces correctly", {
             as.character(res[[1L]]$children[[1L]])
         )
     )
-    rsx_env[["ns"]] <- NULL # no side effects!
 })

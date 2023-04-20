@@ -63,7 +63,7 @@ test_that(
                 )
             }
         )
-        expect_no_error(print(comps[[1L]]()))
+        expect_no_error(as.character(comps[[1L]]()))
     }
 )
 
@@ -144,10 +144,8 @@ test_that("decompose", {
     )
 
     expect_identical(
-        get_tag_output(
-            as_shiny_tag(lst$ui)
-        ),
-        get_tag_output(as_shiny_tag(x$template()))
+        as.character(lst$ui),
+        as.character(x$template())
     )
 
     expect_error(decompose(shiny::div()))
