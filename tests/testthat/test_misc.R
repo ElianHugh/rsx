@@ -116,6 +116,10 @@ test_that("subsetting", {
             shiny::div()
         }
     )
+    expect_error(
+        x[["template"]] <- 5L,
+        class = new_rsx_error("component_validation")
+    )
 })
 
 test_that("decompose", {
@@ -161,4 +165,14 @@ test_that("cannot modify instances", {
     inst <- c_no_modify() |>
         attr("instance")
     expect_error(inst$data$test <- "error")
+})
+
+test_that("instances are registered & returned by get_instances", {
+    reset_rsx_env()
+    x <- component()
+    y <- component()
+    x()
+    y()
+    expect_length(get_instances(), 2L)
+    expect_length(get_component_instances(x$name), 1L)
 })
