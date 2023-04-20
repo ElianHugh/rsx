@@ -79,6 +79,7 @@ or any other R object.</p>
 <p>Data can be accessed in both the methods and template parts of the component via the <code>self</code> keyword.
 For example, the following component defines the data <code>foo</code>, and accesses it in the template via <code>self$foo</code>.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/component.html">component</a></span><span class="op">(</span></span>
+<span>    name <span class="op">=</span> <span class="st">"data_access"</span>,</span>
 <span>    data <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
 <span>        <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>            foo <span class="op">=</span> <span class="fl">1L</span></span>
@@ -90,7 +91,7 @@ For example, the following component defines the data <code>foo</code>, and acce
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu">x</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; &lt;rsx::instance&gt; `component-HL99843jr`</span></span>
+<span><span class="co">#&gt; &lt;rsx::instance&gt; `data_access`</span></span>
 <span><span class="co">#&gt; 1</span></span></code></pre><p></p></div>
 </div>
 
@@ -103,6 +104,7 @@ component function. The <code>data</code> argument should be a list of named obj
 that match the names of the objects defined in the component's data
 function. For example:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/component.html">component</a></span><span class="op">(</span></span>
+<span>    name <span class="op">=</span> <span class="st">"data_access"</span>,</span>
 <span>    data <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
 <span>        <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>            foo <span class="op">=</span> <span class="fl">1L</span></span>
@@ -114,7 +116,7 @@ function. For example:</p>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu">x</span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>foo <span class="op">=</span> <span class="fl">2L</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; &lt;rsx::instance&gt; `component-ZD25946ea`</span></span>
+<span><span class="co">#&gt; &lt;rsx::instance&gt; `data_access`</span></span>
 <span><span class="co">#&gt; 2</span></span></code></pre><p></p></div>
 </div>
 
