@@ -32,6 +32,7 @@ Data can be accessed in both the methods and template parts of the component via
 For example, the following component defines the data \code{foo}, and accesses it in the template via \code{self$foo}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{x <- component(
+    name = "data_access",
     data = function() \{
         list(
             foo = 1L
@@ -43,7 +44,7 @@ For example, the following component defines the data \code{foo}, and accesses i
 )
 
 print(x())
-#> <rsx::instance> `component-HL99843jr`
+#> <rsx::instance> `data_access`
 #> 1
 }\if{html}{\out{</div>}}
 }
@@ -56,6 +57,7 @@ that match the names of the objects defined in the component's data
 function. For example:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{x <- component(
+    name = "data_access",
     data = function() \{
         list(
             foo = 1L
@@ -67,7 +69,7 @@ function. For example:
 )
 
 print(x(data = list(foo = 2L)))
-#> <rsx::instance> `component-ZD25946ea`
+#> <rsx::instance> `data_access`
 #> 2
 }\if{html}{\out{</div>}}
 }

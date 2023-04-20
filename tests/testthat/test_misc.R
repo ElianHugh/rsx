@@ -63,7 +63,7 @@ test_that(
                 )
             }
         )
-        expect_no_error(print(comps[[1L]]()))
+        expect_no_error(as.character(comps[[1L]]()))
     }
 )
 
@@ -116,6 +116,10 @@ test_that("subsetting", {
             shiny::div()
         }
     )
+    expect_error(
+        x[["template"]] <- 5L,
+        class = new_rsx_error("component_validation")
+    )
 })
 
 test_that("decompose", {
@@ -140,10 +144,8 @@ test_that("decompose", {
     )
 
     expect_identical(
-        get_tag_output(
-            as_shiny_tag(lst$ui)
-        ),
-        get_tag_output(as_shiny_tag(x$template()))
+        as.character(lst$ui),
+        as.character(x$template())
     )
 
     expect_error(decompose(shiny::div()))
@@ -161,4 +163,14 @@ test_that("cannot modify instances", {
     inst <- c_no_modify() |>
         attr("instance")
     expect_error(inst$data$test <- "error")
+})
+
+test_that("instances are registered & returned by get_instances", {
+    reset_rsx_env()
+    x <- component()
+    y <- component()
+    x()
+    y()
+    expect_length(get_instances(), 2L)
+    expect_length(get_component_instances(x$name), 1L)
 })

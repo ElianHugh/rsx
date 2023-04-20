@@ -35,6 +35,7 @@ Component templates can be nested through the use of slots.
 Slots are placeholder elements that tell {rsx} where tags should be placed.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{x <- component(
+    name = "slots",
     template = function(ns) \{
         shiny::tagList(
             shiny::tags$slot(),
@@ -44,7 +45,7 @@ Slots are placeholder elements that tell {rsx} where tags should be placed.
 )
 
 print(x(shiny::p("foo")))
-#> <rsx::instance> `component-OQ88361kl`
+#> <rsx::instance> `slots`
 #> <p>foo</p>
 #> <p>bar</p>
 }\if{html}{\out{</div>}}
@@ -53,6 +54,7 @@ You can also specify if you'd like content to be used in the case that a
 slot isn't filled -- this is typically called "fallback" content.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{x <- component(
+    name = "fallback",
     template = function(ns) \{
         shiny::tags$slot(
             shiny::p("Hello!")
@@ -61,7 +63,7 @@ slot isn't filled -- this is typically called "fallback" content.
 )
 
 print(x())
-#> <rsx::instance> `component-VD58611cr`
+#> <rsx::instance> `fallback`
 #> <p>Hello!</p>
 }\if{html}{\out{</div>}}
 \subsection{Named Slots}{
@@ -70,6 +72,7 @@ Slots can be further distinguished by name attributes, which
 can be used to target specific areas of the template.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{x <- component(
+    name = "named_slots",
     template = function(ns) \{
         shiny::tagList(
             shiny::tags$slot(name = "a"),
@@ -78,7 +81,7 @@ can be used to target specific areas of the template.
     \}
 )
 print(x(shiny::p("bar", slot = "b"), shiny::p("foo", slot = "a")))
-#> <rsx::instance> `component-ES27167wq`
+#> <rsx::instance> `named_slots`
 #> <p>foo</p>
 #> <p>bar</p>
 }\if{html}{\out{</div>}}

@@ -32,6 +32,7 @@
 #'
 #' ```{r}
 #' x <- component(
+#'     name = "data_access",
 #'     data = function() {
 #'         list(
 #'             foo = 1L
@@ -54,6 +55,7 @@
 #'
 #' ```{r}
 #' x <- component(
+#'     name = "data_access",
 #'     data = function() {
 #'         list(
 #'             foo = 1L

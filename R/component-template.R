@@ -39,6 +39,7 @@
 #'
 #' ```{r}
 #' x <- component(
+#'     name = "slots",
 #'     template = function(ns) {
 #'         shiny::tagList(
 #'             shiny::tags$slot(),
@@ -55,6 +56,7 @@
 #'
 #' ```{r}
 #' x <- component(
+#'     name = "fallback",
 #'     template = function(ns) {
 #'         shiny::tags$slot(
 #'             shiny::p("Hello!")
@@ -72,6 +74,7 @@
 #'
 #' ```{r}
 #' x <- component(
+#'     name = "named_slots",
 #'     template = function(ns) {
 #'         shiny::tagList(
 #'             shiny::tags$slot(name = "a"),

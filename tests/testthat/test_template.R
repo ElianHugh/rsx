@@ -61,6 +61,25 @@ test_that("template namespace is correct", {
         # noop
     }))
     expect_identical(template_ns, server_ns)
+
+    reset_rsx_env()
+    rsx_env[["ns"]] <- "module"
+    c_module_namespace <- component(
+        template = function(ns) {
+            ns("test")
+        },
+        methods = list(
+            setup = function(input, output, session) {
+                cat(session$ns("test"))
+            }
+        )
+    )
+    template_ns <- as.character(c_module_namespace())
+    server_ns <- capture.output(shiny::testServer(rsx_module_server, args = list(id = "module"), {
+        # noop
+    }))
+    expect_identical(template_ns, server_ns)
+
 })
 
 test_that("templates have access to `self`", {

@@ -40,7 +40,7 @@ test_that("scoped styles", {
     )
 
     expect_identical(
-        get_tag_output(as_shiny_tag(c_scoped_styles())),
+        as.character(c_scoped_styles()),
         sprintf('<div class="%s"></div>', attr(c_scoped_styles, "component_id"))
     )
 
