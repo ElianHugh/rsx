@@ -20,6 +20,8 @@ random_id <- function() {
 
 `%nin%` <- Negate(`%in%`)
 
+is_not_null <- Negate(is.null)
+
 get_functions <- function(env) {
     Filter(
         Negate(is.null),

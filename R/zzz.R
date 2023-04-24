@@ -5,6 +5,10 @@
             parent = asNamespace("rsx")
         )
     }
-    rsx_env[["components"]] <- list()
-    rsx_env[["instances"]] <- list()
+    if (is.null(rsx_env[["components"]])) {
+        rsx_env[["components"]] <- list()
+    }
+    if (is.null(rsx_env[["instances"]])) {
+        rsx_env[["instances"]] <- list()
+    }
 }
