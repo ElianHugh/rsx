@@ -54,7 +54,7 @@ new_instance <- function(comp) {
     }
     lockEnvironment(this$internal)
 
-    class(this) <- c("component_instance", "environment")
+    class(this) <- c("instance", "environment")
     register_component_instance(this)
 }
 
