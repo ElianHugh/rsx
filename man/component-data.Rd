@@ -45,7 +45,7 @@ For example, the following component defines the data \code{foo}, and accesses i
 
 print(x())
 #> <rsx::instance> `data_access`
-#> 1
+#>   1
 }\if{html}{\out{</div>}}
 }
 
@@ -70,7 +70,7 @@ function. For example:
 
 print(x(data = list(foo = 2L)))
 #> <rsx::instance> `data_access`
-#> 2
+#>   2
 }\if{html}{\out{</div>}}
 }
 }
