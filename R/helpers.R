@@ -28,7 +28,7 @@ get_functions <- function(env) {
         eapply(
             env,
             function(x) {
-                if (is.function(x)) {
+                if (!inherits(x, "reactive") && is.function(x)) {
                     x
                 }
             }
@@ -42,7 +42,7 @@ get_nonfunctions <- function(env) {
         eapply(
             env,
             function(x) {
-                if (!is.function(x)) {
+                if (inherits(x, "reactive") || !is.function(x)) {
                     x
                 }
             }

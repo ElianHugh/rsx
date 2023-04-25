@@ -55,7 +55,7 @@
 #' component-styles.R,
 #' component-template.R
 #' @export
-component <- function(name = sprintf("component-%s", random_id()),
+component <- function(name = NULL,
                       data = NULL,
                       methods = NULL,
                       template = NULL,
@@ -76,6 +76,7 @@ component <- function(name = sprintf("component-%s", random_id()),
 }
 
 new_component <- function(name, data, methods, template, styles, namespace) {
+    name <- new_name_property(name)
     component_id <- sprintf("%s%s", name, random_id())
     structure(
         function(...) {
@@ -106,4 +107,13 @@ validate_component <- function(self) { #nolint
         }
     }
     NULL
+}
+
+
+new_name_property <- function(name) {
+    if (is.null(name)) {
+        sprintf("component-%s", random_id())
+    } else {
+        name
+    }
 }

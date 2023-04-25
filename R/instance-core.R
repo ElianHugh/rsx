@@ -59,9 +59,14 @@ new_instance <- function(comp) {
 }
 
 create_env_bindings <- function(comp) {
+    # env hierarchy:
+    # this
+    # |--> internal
+    #      |--> self
     this <- new.env(parent = attr(comp, ".namespace"), hash = FALSE)
     internal <- new.env(parent = this, hash = FALSE)
     internal[["self"]] <- new.env(parent = internal, hash = FALSE)
+
     this[["instance_id"]] <- sprintf("instance-%s", random_id())
     this[["component"]] <- comp
     this[["internal"]] <- internal
