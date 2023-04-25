@@ -36,23 +36,19 @@ new_instance <- function(comp) {
     inst_method_nms <- names(inst_methods)
 
     if (assert_no_name_duplication(inst_data_nms, inst_method_nms)) {
-        nms <- c(
-            inst_data_nms,
-            inst_method_nms
-        )
+        nms <- c(inst_data_nms, inst_method_nms)
         error_instance_name_duplication(nms[duplicated(nms)], this)
     }
-    msg <- validate_params(inst_data, inst_methods)
-    if (!is.null(msg)) {
-        error_instance_validation(msg, this[["component"]])
+
+    validation_msg <- validate_params(inst_data, inst_methods)
+    if (!is.null(validation_msg)) {
+        error_instance_validation(validation_msg, this$component)
     }
 
     list2env(c(inst_data, inst_methods), this$internal$self)
-    lockEnvironment(this$internal[["self"]])
-    for (name in names(inst_methods)) {
-        lockBinding(name, this$internal[["self"]])
-    }
     lockEnvironment(this$internal)
+    lockEnvironment(this$internal[["self"]])
+
 
     class(this) <- c("instance", "environment")
     register_component_instance(this)
@@ -88,6 +84,7 @@ create_env_bindings <- function(comp) {
 
     new_active_binding("data", getter = data_getter, setter = data_setter, env = inst_env)
     new_active_binding("methods", getter = methods_getter, setter = methods_setter, env = inst_env)
+
     inst_env
 }
 
