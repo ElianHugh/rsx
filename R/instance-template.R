@@ -61,15 +61,14 @@ template_tag <- function(instance_object, template, contents, .noWS = NULL) {
         }
     )
 
-    for (hook in hooks) {
-        if (is.function(hook)) {
-            tag <- htmltools::tagAddRenderHook(
-                tag,
-                hook,
-                replace = FALSE
-            )
-        }
-    }
+    hooks <- Filter(function(hook) is.function(hook), hooks)
+    tag <- Reduce(
+        function(tag, hook) {
+            htmltools::tagAddRenderHook(tag, hook, replace = FALSE)
+        },
+        hooks,
+        init = tag
+    )
 
     structure(
         tag,
@@ -217,9 +216,5 @@ compare_slots <- function(tq, cq, instance_object) {
 }
 
 manage_attributes <- function(contents) {
-    lapply(contents, function(x) {
-        if (!inherits(x, "shiny.tag")) {
-            x
-        }
-    })
+    Filter(function(x) !inherits(x, "shiny.tag"), contents)
 }

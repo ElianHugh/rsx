@@ -49,7 +49,7 @@
 #' )
 #'
 #' print(x(shiny::p("foo")))
-#' ````
+#' ```
 #'
 #' You can also specify if you'd like content to be used in the case that a
 #' slot isn't filled -- this is typically called "fallback" content.
@@ -65,7 +65,7 @@
 #' )
 #'
 #' print(x())
-#' ````
+#' ```
 #'
 #' ## Named Slots
 #'
