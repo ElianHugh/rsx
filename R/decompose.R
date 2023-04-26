@@ -25,13 +25,12 @@
 #' @export
 decompose <- function(x) {
     inst <- attributes(x)[["instance"]]
-    if (is.null(inst)) {
-        stop("Cannot decompose object. Shiny tag is not a component instance.")
-    } else {
-        setup <- inst$methods$setup
-        list(
-            server = setup %||% NULL,
-            ui = x
-        )
-    }
+    stopifnot(
+        "Value must be a shiny tag" = inherits(x, "shiny.tag"),
+        "cannot decompose object. Value is not a component instance." = !is.null(inst)
+    )
+    list(
+        server = inst$methods$setup %||% NULL,
+        ui = x
+    )
 }
