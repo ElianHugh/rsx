@@ -16,10 +16,30 @@
 #' }
 #' ````
 #'
-#' This would define the CSS styles for the anchor elements (`<a>`) in the component, setting their color to red.
-#' Styles defined in this way are scoped to the component, meaning they will only apply to
+#' This would define the CSS styles for the anchor
+#' elements (`<a>`) in the component, setting their color to red.
+#'
+#' # Scoped Styles
+#'
+#' Styles defined in a component are scoped to the component,  meaning they will only apply to
 #' elements within that component.
 #'
+#' To style the top-level node of the component, we
+#' can apply the styles without specifying a tag:
+#'
+#' ```r
+#' x <- component(
+#'  name = "scoped_styles",
+#'  template = function(ns) {
+#'      shiny::div(
+#'       "Hello world!"
+#'      )
+#'  },
+#'  styles = function() {
+#'     "color: red"
+#'   }
+#' )
+#' ```
 #'
 #' @name component-styles
 #' @family components
