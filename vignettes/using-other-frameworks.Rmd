@@ -1,5 +1,5 @@
 ---
-title: "using-other-frameworks"
+title: "Using Other Frameworks"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{using-other-frameworks}
