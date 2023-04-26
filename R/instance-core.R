@@ -66,7 +66,7 @@ create_env_bindings <- function(comp) {
     internal_env$self <- self_env
 
     data_getter <- function() {
-        get_nonfunctions(self_env)
+        get_data(self_env)
     }
 
     data_setter <- function(v) {

@@ -36,7 +36,7 @@ get_functions <- function(env) {
     )
 }
 
-get_nonfunctions <- function(env) {
+get_data <- function(env) {
     Filter(
         Negate(is.null),
         eapply(

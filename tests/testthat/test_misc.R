@@ -149,6 +149,7 @@ test_that("decompose", {
     )
 
     expect_error(decompose(shiny::div()))
+    expect_error(decompose(1L))
 })
 
 test_that("cannot modify instances", {
