@@ -1,7 +1,6 @@
 set_namespace <- function(id) {
     if (!is.null(rsx_env[["ns"]])) {
-        out <- sprintf("%s-%s", rsx_env$ns, id)
-        shiny::NS(out)
+        shiny::NS(sprintf("%s-%s", rsx_env$ns, id))
     } else {
         shiny::NS(id)
     }

@@ -28,8 +28,9 @@ decompose <- function(x) {
     if (is.null(inst)) {
         stop("Cannot decompose object. Shiny tag is not a component instance.")
     } else {
+        setup <- inst$methods$setup
         list(
-            server = inst[["methods"]][["setup"]] %||% NULL,
+            server = setup %||% NULL,
             ui = x
         )
     }
