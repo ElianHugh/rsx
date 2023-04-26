@@ -5,7 +5,7 @@
 \title{Create a component}
 \usage{
 component(
-  name = sprintf("component-\%s", random_id()),
+  name = NULL,
   data = NULL,
   methods = NULL,
   template = NULL,

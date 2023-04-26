@@ -27,7 +27,7 @@ format.component <- function(x, ...) {
     }
     instances <- sprintf("Instances: %s", length(get_component_instances(x$name)))
     subcomps <- list("data", "template", "methods", "styles") |>
-        lapply(function(y) {
+        sapply(function(y) {
             subcomp <- x[[y]]
             if (identical(subcomp, no_op_data)) {
                 list(NULL)
@@ -38,8 +38,7 @@ format.component <- function(x, ...) {
             } else {
                 sprintf("   %s: %s", y, class(subcomp)[[1L]])
             }
-        }) |>
-        unlist()
+        })
 
     subcomp_header <- {
         if (any(vapply(subcomps, is_not_null, TRUE))) {

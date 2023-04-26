@@ -1,7 +1,6 @@
 set_namespace <- function(id) {
     if (!is.null(rsx_env[["ns"]])) {
-        out <- sprintf("%s-%s", rsx_env$ns, id)
-        shiny::NS(out)
+        shiny::NS(sprintf("%s-%s", rsx_env$ns, id))
     } else {
         shiny::NS(id)
     }
@@ -24,7 +23,7 @@ template_tag <- function(instance_object, template, contents, .noWS = NULL) {
         .noWS = .noWS
     )
 
-    el <- template(
+    template_output <- template(
         ns = set_namespace(instance_object$instance_id)
     )
 
@@ -32,7 +31,7 @@ template_tag <- function(instance_object, template, contents, .noWS = NULL) {
         function(element) {
             element$name <- "component"
             children <- element[["children"]]
-            element$children <- el
+            element$children <- template_output
             element <- manage_slots(element, children, instance_object)
             # return element children as the node is
             # wrapped in a template node
@@ -62,15 +61,14 @@ template_tag <- function(instance_object, template, contents, .noWS = NULL) {
         }
     )
 
-    for (hook in hooks) {
-        if (is.function(hook)) {
-            tag <- htmltools::tagAddRenderHook(
-                tag,
-                hook,
-                replace = FALSE
-            )
-        }
-    }
+    hooks <- Filter(function(hook) is.function(hook), hooks)
+    tag <- Reduce(
+        function(tag, hook) {
+            htmltools::tagAddRenderHook(tag, hook, replace = FALSE)
+        },
+        hooks,
+        init = tag
+    )
 
     structure(
         tag,
@@ -218,9 +216,5 @@ compare_slots <- function(tq, cq, instance_object) {
 }
 
 manage_attributes <- function(contents) {
-    lapply(contents, function(x) {
-        if (!inherits(x, "shiny.tag")) {
-            x
-        }
-    })
+    Filter(function(x) !inherits(x, "shiny.tag"), contents)
 }

@@ -1,7 +1,7 @@
 random_id <- function() {
-    random1 <- paste0(LETTERS[round(sample.int(26L, size = 2L))], collapse = "")
-    random2 <- as.numeric(Sys.Date() + round(sample.int(99999L, size = 1L)))
-    random3 <- paste0(letters[round(sample.int(26L, size = 2L))], collapse = "")
+    random1 <- sample(LETTERS, 2L)
+    random2 <- as.numeric(format(Sys.Date(), "%y%m%d")) + sample(99999L, size = 1L)
+    random3 <- sample(letters, 2L)
     paste0(
         random1,
         random2,
@@ -28,7 +28,7 @@ get_functions <- function(env) {
         eapply(
             env,
             function(x) {
-                if (is.function(x)) {
+                if (!inherits(x, "reactive") && is.function(x)) {
                     x
                 }
             }
@@ -36,13 +36,13 @@ get_functions <- function(env) {
     )
 }
 
-get_nonfunctions <- function(env) {
+get_data <- function(env) {
     Filter(
         Negate(is.null),
         eapply(
             env,
             function(x) {
-                if (!is.function(x)) {
+                if (inherits(x, "reactive") || !is.function(x)) {
                     x
                 }
             }

@@ -122,15 +122,16 @@ rsx_server <- function() {
     function(input,
              output,
              session = shiny::getDefaultReactiveDomain()) {
-        for (instance in names(rsx_env$instances)) {
-            if (is.function(rsx_env$instances[[instance]]$methods$setup)) {
+        lapply(
+            Filter(function(instance) is.function(instance$methods$setup), rsx_env$instances),
+            function(instance) {
                 shiny::moduleServer(
-                    id      = rsx_env$instances[[instance]]$instance_id,
-                    module  = rsx_env$instances[[instance]]$methods$setup,
+                    id      = instance$instance_id,
+                    module  = instance$methods$setup,
                     session = session
                 )
             }
-        }
+        )
     }
 }
 
@@ -145,15 +146,16 @@ rsx_server <- function() {
 #' @export
 rsx_module_server <- function(id) {
     shiny::moduleServer(id, function(input, output, session) {
-        for (instance in names(rsx_env$instances)) {
-            if (is.function(rsx_env$instances[[instance]]$methods$setup)) {
+        lapply(
+            Filter(function(instance) is.function(instance$methods$setup), rsx_env$instances),
+            function(instance) {
                 shiny::moduleServer(
-                    id = rsx_env$instances[[instance]]$instance_id,
-                    module  = rsx_env$instances[[instance]]$methods$setup,
+                    id      = instance$instance_id,
+                    module  = instance$methods$setup,
                     session = session
                 )
             }
-        }
+        )
     })
 }
 
