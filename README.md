@@ -36,7 +36,7 @@ devtools::install_github("ElianHugh/rsx")
 
 ## Usage
 
-To use rsx, you define your components as functions with the component function. Components can data, a template, styles, and methods, making them fully encapsulated and reusable. Once defined, you can use these components in your Shiny app with the rsx_app function.
+To use rsx, you define your components as functions with the component function. Components can be composed of data, a template, styles, and methods, making them fully encapsulated and reusable. Once defined, you can use these components in your Shiny app with the rsx_app function.
 
 ```r
 library(rsx)
