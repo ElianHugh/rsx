@@ -26,7 +26,7 @@ Styles are scoped to the component."><!-- mathjax --><script src="https://cdnjs.
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/using-other-frameworks.html">using-other-frameworks</a>
+    <a class="dropdown-item" href="../articles/using-other-frameworks.html">Using Other Frameworks</a>
   </div>
 </li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
@@ -57,9 +57,26 @@ For example:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">styles</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
 <span><span class="st">"a { color: red; }"</span></span>
 <span><span class="op">}</span></span></code></pre><p></p></div>
-<p>This would define the CSS styles for the anchor elements (<code>&lt;a&gt;</code>) in the component, setting their color to red.
-Styles defined in this way are scoped to the component, meaning they will only apply to
+<p>This would define the CSS styles for the anchor
+elements (<code>&lt;a&gt;</code>) in the component, setting their color to red.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="scoped-styles">Scoped Styles<a class="anchor" aria-label="anchor" href="#scoped-styles"></a></h2>
+    <p>Styles defined in a component are scoped to the component,  meaning they will only apply to
 elements within that component.</p>
+<p>To style the top-level node of the component, we
+can apply the styles without specifying a tag:</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/component.html">component</a></span><span class="op">(</span></span>
+<span> name <span class="op">=</span> <span class="st">"scoped_styles"</span>,</span>
+<span> template <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">ns</span><span class="op">)</span> <span class="op">{</span></span>
+<span>     <span class="fu">shiny</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html" class="external-link">div</a></span><span class="op">(</span></span>
+<span>      <span class="st">"Hello world!"</span></span>
+<span>     <span class="op">)</span></span>
+<span> <span class="op">}</span>,</span>
+<span> styles <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="st">"color: red"</span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">)</span></span></code></pre><p></p></div>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
