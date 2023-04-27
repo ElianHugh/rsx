@@ -269,3 +269,35 @@ test_that("can't pass named slots that don't exist", {
         class = new_rsx_error("instance_slot_name")
     )
 })
+
+test_that("slots can be passed to slots", {
+    c_slot1 <- component(
+        name = "c_slot1",
+        template = function(ns) {
+            c_slot2(
+                shiny::tags$slot()
+            )
+        }
+    )
+    c_slot2 <- component(
+        name = "c_slot2",
+        template = function(ns) {
+            shiny::div(
+                shiny::tags$slot()
+            )
+        }
+    )
+
+    expect_identical(
+        as.character(c_slot1()),
+        as.character(shiny::div())
+    )
+    expect_identical(
+        as.character(c_slot1(shiny::p("slotted"))),
+        as.character(
+            shiny::div(
+                shiny::p("slotted")
+            )
+        )
+    )
+})
