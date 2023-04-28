@@ -28,7 +28,8 @@ instantiate <- function(comp) {
 }
 
 new_instance <- function(comp) {
-    this <- create_env_bindings(comp)
+    envs <- create_environments(comp)
+    this <- create_env_bindings(comp, envs)
 
     inst_methods <- instantiate_functions(attr(comp, "methods"), this)
     inst_data <- instantiate_data(attr(comp, "data"), this)
@@ -53,38 +54,47 @@ new_instance <- function(comp) {
     register_component_instance(this)
 }
 
-create_env_bindings <- function(comp) {
+create_environments <- function(comp) {
     inst_env <- new.env(parent = attr(comp, ".namespace"), hash = FALSE)
     internal_env <- new.env(parent = inst_env, hash = FALSE)
     self_env <- new.env(parent = internal_env, hash = FALSE)
+    list(
+        inst_env = inst_env,
+        internal_env = internal_env,
+        self_env = self_env
+    )
+}
 
-    inst_env$instance_id <- sprintf("instance-%s", random_id())
-    inst_env$component <- comp
-    inst_env$internal <- internal_env
-    inst_env$template <- instantiate_template(comp$template, internal_env)
+create_env_bindings <- function(comp, envs) {
 
-    internal_env$self <- self_env
+
+    envs$inst_env$instance_id <- sprintf("instance-%s", random_id())
+    envs$inst_env$component <- comp
+    envs$inst_env$internal <- envs$internal_env
+    envs$inst_env$template <- instantiate_template(comp$template, envs$internal_env)
+
+    envs$internal_env$self <- envs$self_env
 
     data_getter <- function() {
-        get_data(self_env)
+        get_data(envs$self_env)
     }
 
     data_setter <- function(v) {
-        error_instance_assignment(inst_env, "data")
+        error_instance_assignment(envs$inst_env, "data")
     }
 
     methods_getter <- function() {
-        get_functions(self_env)
+        get_functions(envs$self_env)
     }
 
     methods_setter <- function(v) {
-        error_instance_assignment(inst_env, "methods")
+        error_instance_assignment(envs$inst_env, "methods")
     }
 
-    new_active_binding("data", getter = data_getter, setter = data_setter, env = inst_env)
-    new_active_binding("methods", getter = methods_getter, setter = methods_setter, env = inst_env)
+    new_active_binding("data", getter = data_getter, setter = data_setter, env = envs$inst_env)
+    new_active_binding("methods", getter = methods_getter, setter = methods_setter, env = envs$inst_env)
 
-    inst_env
+    envs$inst_env
 }
 
 validate_params <- function(dat, methods) {
