@@ -91,11 +91,7 @@
 NULL
 
 new_template_property <- function(template) {
-    if (!is.null(template)) {
-        template
-    } else {
-        no_op_template
-    }
+    template %||% no_op_template
 }
 
 validate_template_property <- function(template) {

@@ -75,11 +75,7 @@
 NULL
 
 new_data_property <- function(dat) {
-    if (!is.null(dat)) {
-        dat
-    } else {
-        no_op_data
-    }
+    dat %||% no_op_data
 }
 
 validate_data_property <- function(data) {

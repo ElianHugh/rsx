@@ -64,11 +64,7 @@
 NULL
 
 new_methods_property <- function(methods) {
-    if (!is.null(methods)) {
-        methods
-    } else {
-        NULL
-    }
+    methods
 }
 
 validate_methods_property <- function(methods) {
