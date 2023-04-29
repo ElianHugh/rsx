@@ -18,8 +18,7 @@
 #'         shiny::div(id = ns("example"))
 #'     }
 #' )
-#' test()
-#' test() # note the different id
+#' identical(test(), test())
 #'
 #' @noRd
 instantiate <- function(comp) {
@@ -28,89 +27,41 @@ instantiate <- function(comp) {
 }
 
 new_instance <- function(comp) {
-    this <- create_env_bindings(comp)
+    envs <- create_environments(comp)
+    this <- create_env_bindings(comp, envs)
 
-    inst_methods <- instantiate_functions(attr(comp, "methods"), this)
-    inst_data <- instantiate_data(attr(comp, "data"), this)
-    inst_data_nms <- names(inst_data)
-    inst_method_nms <- names(inst_methods)
+    instantiate_data_property(comp, envs)
+    instantiate_methods_property(comp, envs)
 
-    if (assert_no_name_duplication(inst_data_nms, inst_method_nms)) {
-        nms <- c(inst_data_nms, inst_method_nms)
-        error_instance_name_duplication(nms[duplicated(nms)], this)
-    }
-
-    validation_msg <- validate_params(inst_data, inst_methods)
-    if (!is.null(validation_msg)) {
-        error_instance_validation(validation_msg, this$component)
-    }
-
-    list2env(c(inst_data, inst_methods), this$internal$self)
     lockEnvironment(this$internal)
-    lockEnvironment(this$internal[["self"]])
+    lockEnvironment(this$internal$self)
 
     class(this) <- c("instance", "environment")
     register_component_instance(this)
 }
 
-create_env_bindings <- function(comp) {
+create_environments <- function(comp) {
     inst_env <- new.env(parent = attr(comp, ".namespace"), hash = FALSE)
     internal_env <- new.env(parent = inst_env, hash = FALSE)
     self_env <- new.env(parent = internal_env, hash = FALSE)
-
-    inst_env$instance_id <- sprintf("instance-%s", random_id())
-    inst_env$component <- comp
-    inst_env$internal <- internal_env
-    inst_env$template <- instantiate_template(comp$template, internal_env)
-
-    internal_env$self <- self_env
-
-    data_getter <- function() {
-        get_data(self_env)
-    }
-
-    data_setter <- function(v) {
-        error_instance_assignment(inst_env, "data")
-    }
-
-    methods_getter <- function() {
-        get_functions(self_env)
-    }
-
-    methods_setter <- function(v) {
-        error_instance_assignment(inst_env, "methods")
-    }
-
-    new_active_binding("data", getter = data_getter, setter = data_setter, env = inst_env)
-    new_active_binding("methods", getter = methods_getter, setter = methods_setter, env = inst_env)
-
-    inst_env
+    list(
+        inst_env = inst_env,
+        internal_env = internal_env,
+        self_env = self_env
+    )
 }
 
-validate_params <- function(dat, methods) {
-    if (length(names(dat)) != length(dat)) {
-        return("$data must be a named list.")
-    }
-    if (length(names(methods)) != length(methods)) {
-        return(
-            "$methods must be a named list."
-        )
-    }
-    NULL
-}
-
-instantiate_functions <- function(methods, inst) {
-    lapply(methods, set_fn_env, inst$internal)
-}
-
-instantiate_data <- function(dat, inst) {
-    environment(dat) <- inst[["internal"]]
-    invisible(dat())
+create_env_bindings <- function(comp, envs) {
+    envs$inst_env$internal <- envs$internal_env
+    envs$internal_env$self <- envs$self_env
+    envs$inst_env$component <- comp
+    envs$inst_env$instance_id <- sprintf("instance-%s", random_id())
+    envs$inst_env$template <- instantiate_template(comp$template, envs)
+    envs$inst_env
 }
 
 instantiate_template <- function(tmp, env) {
-    environment(tmp) <- env
-    invisible(tmp)
+    invisible(set_fn_env(tmp, env$internal_env))
 }
 
 register_component_instance <- function(inst) {
