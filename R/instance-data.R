@@ -31,6 +31,6 @@ validate_data <- function(comp, dat) {
 }
 
 instantiate_data <- function(dat, inst) {
-    environment(dat) <- inst[["internal"]]
+    set_fn_env(dat, inst$internal)
     invisible(dat())
 }

@@ -58,20 +58,7 @@ create_env_bindings <- function(comp, envs) {
     envs$inst_env$internal <- envs$internal_env
     envs$inst_env$template <- instantiate_template(comp$template, envs$internal_env)
     envs$internal_env$self <- envs$self_env
-
     envs$inst_env
-}
-
-validate_params <- function(dat, methods) {
-    if (length(names(dat)) != length(dat)) {
-        return("$data must be a named list.")
-    }
-    if (length(names(methods)) != length(methods)) {
-        return(
-            "$methods must be a named list."
-        )
-    }
-    NULL
 }
 
 instantiate_template <- function(tmp, env) {
