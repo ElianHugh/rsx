@@ -56,14 +56,13 @@ create_env_bindings <- function(comp, envs) {
     envs$inst_env$instance_id <- sprintf("instance-%s", random_id())
     envs$inst_env$component <- comp
     envs$inst_env$internal <- envs$internal_env
-    envs$inst_env$template <- instantiate_template(comp$template, envs$internal_env)
+    envs$inst_env$template <- instantiate_template(comp$template, envs)
     envs$internal_env$self <- envs$self_env
     envs$inst_env
 }
 
 instantiate_template <- function(tmp, env) {
-    set_fn_env(tmp, env)
-    invisible(tmp)
+    invisible(set_fn_env(tmp, env$internal_env))
 }
 
 register_component_instance <- function(inst) {
