@@ -62,7 +62,7 @@ create_env_bindings <- function(comp, envs) {
 }
 
 instantiate_template <- function(tmp, env) {
-    environment(tmp) <- env
+    set_fn_env(tmp, env)
     invisible(tmp)
 }
 
