@@ -18,8 +18,7 @@
 #'         shiny::div(id = ns("example"))
 #'     }
 #' )
-#' test()
-#' test() # note the different id
+#' identical(test(), test())
 #'
 #' @noRd
 instantiate <- function(comp) {
@@ -35,7 +34,7 @@ new_instance <- function(comp) {
     instantiate_methods_property(comp, envs)
 
     lockEnvironment(this$internal)
-    lockEnvironment(this$internal[["self"]])
+    lockEnvironment(this$internal$self)
 
     class(this) <- c("instance", "environment")
     register_component_instance(this)
@@ -53,11 +52,11 @@ create_environments <- function(comp) {
 }
 
 create_env_bindings <- function(comp, envs) {
-    envs$inst_env$instance_id <- sprintf("instance-%s", random_id())
-    envs$inst_env$component <- comp
     envs$inst_env$internal <- envs$internal_env
-    envs$inst_env$template <- instantiate_template(comp$template, envs)
     envs$internal_env$self <- envs$self_env
+    envs$inst_env$component <- comp
+    envs$inst_env$instance_id <- sprintf("instance-%s", random_id())
+    envs$inst_env$template <- instantiate_template(comp$template, envs)
     envs$inst_env
 }
 
