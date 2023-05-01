@@ -30,9 +30,6 @@ new_instance <- function(comp) {
     envs <- create_environments(comp)
     this <- create_env_bindings(comp, envs)
 
-    instantiate_data_property(comp, envs)
-    instantiate_methods_property(comp, envs)
-
     lockEnvironment(this$internal)
     lockEnvironment(this$internal$self)
 
@@ -44,6 +41,7 @@ create_environments <- function(comp) {
     inst_env <- new.env(parent = attr(comp, ".namespace"), hash = FALSE)
     internal_env <- new.env(parent = inst_env, hash = FALSE)
     self_env <- new.env(parent = internal_env, hash = FALSE)
+
     list(
         inst_env = inst_env,
         internal_env = internal_env,
@@ -57,6 +55,8 @@ create_env_bindings <- function(comp, envs) {
     envs$inst_env$component <- comp
     envs$inst_env$instance_id <- sprintf("instance-%s", random_id())
     envs$inst_env$template <- instantiate_template(comp$template, envs)
+    instantiate_data_property(comp, envs)
+    instantiate_methods_property(comp, envs)
     envs$inst_env
 }
 

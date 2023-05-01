@@ -1,3 +1,21 @@
+test_that("format returns a character vector", {
+    x <- component() |>
+        format()
+    expect_true(is.character(x))
+
+    x <- component(
+        template = function(ns) {
+
+        },
+        methods = list(),
+        data = function() {
+
+        }
+    ) |>
+        format()
+    expect_true(is.character(x))
+})
+
 test_that("components list their subcomponents", {
     c_printing <- component(
         name = "component_printing",
