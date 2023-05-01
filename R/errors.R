@@ -88,10 +88,10 @@ error_instance_data <- function(supplied_data, instance_object) {
             names(supplied_data)
         ),
         ifelse(
-            length(instance_object$component$data) > 0L,
+            length(instance_object$data) > 0L,
             paste0(
                 "Allowed data: ",
-                names(instance_object$component$data),
+                names(instance_object$data),
                 collapse = ", "
             ),
             "Component does not have any data defined"
