@@ -2,7 +2,9 @@ url: https://elianhugh.github.io/rsx/
 template:
   bootstrap: 5
   params:
-      bootswatch: flatly
+      bootswatch: darkly
+  bslib:
+    primary: "#c50000"
 reference:
 - title: "Components"
   desc: "Component infrastructure"
