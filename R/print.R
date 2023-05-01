@@ -25,7 +25,6 @@ format.component <- function(x, ...) {
             NULL
         }
     }
-    instances <- sprintf("Instances: %s", length(get_component_instances(x$name)))
     subcomps <- list("data", "template", "methods", "styles") |>
         sapply(function(y) {
             subcomp <- x[[y]]
