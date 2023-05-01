@@ -21,6 +21,20 @@ error_unknown_subset <- function(x) {
     )
 }
 
+error_app_root <- function(x) {
+    msg <- sprintf(
+        "root is of class `%s`, expected `component`",
+        class(x)[[1L]]
+    )
+    rlang::abort(
+        c(
+            "rsx app cannot be called without a top-level rsx::component passed as a root argument",
+            msg
+        ),
+        class = new_rsx_error("app_root")
+    )
+}
+
 # ~ Component errors ~~~
 
 error_component_validation <- function(msg) {

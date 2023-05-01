@@ -65,6 +65,6 @@ instantiate_template <- function(tmp, env) {
 }
 
 register_component_instance <- function(inst) {
-    rsx_env[["instances"]][[inst$instance_id]] <- inst
+    rsx_env$instances[[inst$instance_id]] <- inst
     invisible(inst)
 }
