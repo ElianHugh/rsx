@@ -1,7 +1,7 @@
 url: https://elianhugh.github.io/rsx/
 template:
   bootstrap: 5
-  bootswatch: darkly
+  bootswatch: solar
   theme: arrow-dark
 reference:
 - title: "Components"
