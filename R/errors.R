@@ -21,6 +21,20 @@ error_unknown_subset <- function(x) {
     )
 }
 
+error_app_root <- function(x) {
+    msg <- c(
+        "rsx app cannot be called without a top-level rsx::component passed as a root argument",
+        sprintf(
+            "root is of class `%s`, expected `component`",
+            class(x)[[1L]]
+        )
+    )
+    rlang::abort(
+        msg,
+        class = new_rsx_error("app_root")
+    )
+}
+
 # ~ Component errors ~~~
 
 error_component_validation <- function(msg) {
@@ -39,7 +53,7 @@ error_component_validation <- function(msg) {
 instance_invalid_txt <- function(instance_object) {
     sprintf(
         "<rsx::component> `%s` instance is invalid:",
-        instance_object$name
+        instance_object$component$name
     )
 }
 
@@ -74,10 +88,10 @@ error_instance_data <- function(supplied_data, instance_object) {
             names(supplied_data)
         ),
         ifelse(
-            length(instance_object$component$data) > 0L,
+            length(instance_object$data) > 0L,
             paste0(
                 "Allowed data: ",
-                names(instance_object$component$data),
+                names(instance_object$data),
                 collapse = ", "
             ),
             "Component does not have any data defined"

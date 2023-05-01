@@ -25,7 +25,7 @@ validate_data <- function(comp, dat) {
     if (length(names(dat)) != length(dat)) {
         error_instance_validation(
             "$data must be a named list.",
-            comp
+            list(component = comp)
         )
     }
 }

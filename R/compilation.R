@@ -19,13 +19,10 @@ rsx_app <- function(root, ..., resource_path = NULL, app_class = "App") {
     stopifnot(is.character(resource_path) || is.null(resource_path))
     stopifnot(is.character(app_class))
 
-
     if (is.component(root)) {
         root <- root()
 
-        if (
-            !is.null(resource_path)
-        ) {
+        if (!is.null(resource_path)) {
             static_path <- compile_styles(resource_path)
         }
         shiny::shinyApp(
@@ -38,9 +35,7 @@ rsx_app <- function(root, ..., resource_path = NULL, app_class = "App") {
             ...
         )
     } else {
-        stop(
-            "rsx app cannot be called without a top-level rsx::component passed as a root argument."
-        )
+        error_app_root(root)
     }
 }
 

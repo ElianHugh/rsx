@@ -25,20 +25,20 @@ format.component <- function(x, ...) {
             NULL
         }
     }
-    instances <- sprintf("Instances: %s", length(get_component_instances(x$name)))
     subcomps <- list("data", "template", "methods", "styles") |>
         sapply(function(y) {
             subcomp <- x[[y]]
-            if (identical(subcomp, no_op_data)) {
-                list(NULL)
-            } else if (identical(subcomp, no_op_template)) {
-                list(NULL)
-            } else if (is.null(subcomp)) {
-                list(NULL)
-            } else {
+            if (all(
+                !identical(subcomp, no_op_data),
+                !identical(subcomp, no_op_template),
+                !is.null(subcomp)
+            )
+            ) {
                 sprintf("   %s: %s", y, class(subcomp)[[1L]])
             }
-        })
+        }) |>
+        Filter(is_not_null, x = _) |>
+        unlist()
 
     subcomp_header <- {
         if (any(vapply(subcomps, is_not_null, TRUE))) {

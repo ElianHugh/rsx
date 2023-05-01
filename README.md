@@ -1,4 +1,4 @@
-# rsx
+# rsx <a href="https://elianhugh.github.io/rsx/"><img src="man/figures/logo.png" align="right" height="139" /></a>
 
 <!-- badges: start -->
 [![Lifecycle:
