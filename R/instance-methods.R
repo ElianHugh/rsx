@@ -24,7 +24,8 @@ instantiate_methods_property <- function(comp, envs) {
 validate_methods <- function(comp, methods, envs) {
     if (length(names(methods)) != length(methods)) {
         error_instance_validation(
-            "$methods must be a named list.", comp
+            "$methods must be a named list.",
+            list(component = comp)
         )
     }
     inst_data_nms <- names(envs$self_env)

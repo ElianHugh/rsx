@@ -53,7 +53,7 @@ error_component_validation <- function(msg) {
 instance_invalid_txt <- function(instance_object) {
     sprintf(
         "<rsx::component> `%s` instance is invalid:",
-        instance_object$name
+        instance_object$component$name
     )
 }
 
