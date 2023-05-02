@@ -27,7 +27,7 @@
         attr(x, arg) <- value
         msg <- validate_component(x)
         if (!is.null(msg)) {
-            error_component_validation(msg)
+            error_component_validation(msg, x$name)
         }
         x
     } else {

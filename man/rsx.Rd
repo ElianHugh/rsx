@@ -5,6 +5,8 @@
 \alias{rsx-package}
 \title{rsx: shiny components}
 \description{
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
+
 Create complex yet manageable Shiny applications with nestable components that encapsulate both UI and state. Heavily inspired by many JavaScript frameworks, particularly Vue.
 }
 \details{

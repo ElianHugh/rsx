@@ -37,9 +37,9 @@ error_app_root <- function(x) {
 
 # ~ Component errors ~~~
 
-error_component_validation <- function(msg) {
+error_component_validation <- function(msg, name) {
     msg <- c(
-        "<rsx::component> object is invalid:",
+        sprintf("<rsx::component> `%s` is invalid:", name),
         msg
     )
     rlang::abort(

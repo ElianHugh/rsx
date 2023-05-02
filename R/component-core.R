@@ -70,7 +70,7 @@ component <- function(name = NULL,
     )
     msg <- validate_component(this)
     if (!is.null(msg)) {
-        error_component_validation(msg)
+        error_component_validation(msg, this$name)
     }
     this
 }
@@ -88,7 +88,7 @@ new_component <- function(name, data, methods, template, styles, namespace) {
         data         = new_data_property(data),
         methods      = new_methods_property(methods),
         template     = new_template_property(template),
-        styles       = new_styles_property(styles, component_id),
+        styles       = new_styles_property(styles, component_id, name),
         .namespace   = namespace
     )
 }

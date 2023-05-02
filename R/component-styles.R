@@ -47,10 +47,10 @@
 NULL
 
 
-new_styles_property <- function(style_fun, hash) {
+new_styles_property <- function(style_fun, hash, name) {
     msg <- validate_styles_precompile(style_fun)
     if (!is.null(msg) && nzchar(msg)) {
-        error_component_validation(msg)
+        error_component_validation(msg, name)
     }
     if (!is.null(style_fun) && is.function(style_fun)) {
         generate_scoped_sass(style_fun, hash)
